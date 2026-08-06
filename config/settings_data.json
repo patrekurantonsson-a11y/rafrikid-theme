@@ -6,12 +6,19 @@
     "color_pe_gul": "#D8CE24",
     "page_width": 1280,
     "spacing_sections": 60,
-    "logo_text": "Rafríkið",
     "logo_width": 160,
-    "phone_number": "422 0000",
-    "announcement_text": "",
     "footer_business_line": "Rafríkið ehf. · Þorlákshöfn",
-    "cart_type": "drawer"
+    "cart_type": "drawer",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_text": "Rafríkið",
+          "phone_number": "422 0000",
+          "announcement_text": ""
+        }
+      }
+    }
   },
   "presets": {}
 }

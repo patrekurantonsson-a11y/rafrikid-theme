@@ -22,7 +22,7 @@ shopify theme dev --store your-store.myshopify.com
 
 1. Zip the `rafrikid-theme/` directory:
    ```bash
-   zip -r rafrikid-theme.zip rafrikid-theme/
+   cd rafrikid-theme && zip -r ../rafrikid-theme.zip . -x ".*" -x "__MACOSX/*" -x "*/.DS_Store"
    ```
 2. Go to **Shopify Admin → Online Store → Themes**
 3. Click **Add theme → Upload zip file** and select `rafrikid-theme.zip`
