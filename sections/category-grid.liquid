@@ -1,0 +1,101 @@
+{% comment %}sections/category-grid.liquid — Editable category tiles via Shopify blocks{% endcomment %}
+<section class="rf-section">
+  <div class="rf-container">
+    {%- if section.settings.heading != blank -%}
+      <div class="rf-section__heading">
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="rf-cat-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category' -%}
+          <a
+            href="{{ block.settings.url | default: '#' }}"
+            class="rf-cat-tile{% if block.settings.highlight %} rf-cat-tile--highlight{% endif %}"
+            {% if block.settings.highlight %}style="border-color:var(--rf-kopar);"{% endif %}
+            {{ block.shopify_attributes }}
+          >
+            {% render 'icon', name: block.settings.icon, size: 28 %}
+            {{ block.settings.label }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vöruflokkarnir",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Fyrirsögn", "default": "Vöruflokkar" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Flokkur",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Heiti flokks",
+          "default": "Flokkur"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Hlekkur"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Tákn",
+          "default": "bolt",
+          "options": [
+            { "value": "bulb",        "label": "Ljósapera" },
+            { "value": "lamp",        "label": "Lampi / húsið" },
+            { "value": "switch",      "label": "Rofi / tengi" },
+            { "value": "bolt",        "label": "Eldingur" },
+            { "value": "panel",       "label": "Tafla / panel" },
+            { "value": "cable",       "label": "Kapall / vír" },
+            { "value": "gear",        "label": "Tannhjól / stýring" },
+            { "value": "charger",     "label": "Hleðslustöð / bíll" },
+            { "value": "solar",       "label": "Sól / sólarorka" },
+            { "value": "ventilation", "label": "Loftræsting / ský" },
+            { "value": "tool",        "label": "Verkfæri" },
+            { "value": "tag",         "label": "Verðmiði / útsala" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Auðkenna (t.d. útsala)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vöruflokkarnir",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Ljós og perur",              "url": "/collections/ljos-og-perur",   "icon": "bulb"        } },
+        { "type": "category", "settings": { "label": "Lampar og ljósabúnaður",      "url": "/collections/lampar",           "icon": "lamp"        } },
+        { "type": "category", "settings": { "label": "Rofar og tenglar",            "url": "/collections/rofar-og-tenglar", "icon": "switch"      } },
+        { "type": "category", "settings": { "label": "Raflagnaefni",                "url": "/collections/raflagnaefni",     "icon": "bolt"        } },
+        { "type": "category", "settings": { "label": "Töflubúnaður og varnir",      "url": "/collections/toflubunadur",     "icon": "panel"       } },
+        { "type": "category", "settings": { "label": "Kaplar og vír",               "url": "/collections/kaplar-og-vir",   "icon": "cable"       } },
+        { "type": "category", "settings": { "label": "Iðnstýringar og sjálfvirkni", "url": "/collections/idnstyringar",     "icon": "gear"        } },
+        { "type": "category", "settings": { "label": "Hleðslustöðvar og rafbílar",  "url": "/collections/hledslustodvar",   "icon": "charger"     } },
+        { "type": "category", "settings": { "label": "Sólarorka og rafgeymar",      "url": "/collections/solarorka",        "icon": "solar"       } },
+        { "type": "category", "settings": { "label": "Loftræsting og hiti",         "url": "/collections/loftrae-sting",    "icon": "ventilation" } },
+        { "type": "category", "settings": { "label": "Verkfæri og mælitæki",        "url": "/collections/verkfaeri",        "icon": "tool"        } },
+        { "type": "category", "settings": { "label": "Útsala", "url": "/collections/utsala", "icon": "tag", "highlight": true } }
+      ]
+    }
+  ],
+  "max_blocks": 24
+}
+{% endschema %}

@@ -1,0 +1,42 @@
+{% comment %}sections/brand-strip.liquid — Vörumerki logo strip{% endcomment %}
+<section class="rf-section rf-section--alt" style="padding-block:2.5rem;">
+  <div class="rf-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 style="text-align:center;font-size:1rem;text-transform:uppercase;letter-spacing:.1em;color:var(--rf-stal);font-family:var(--font-body);margin-bottom:1.5rem;">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="rf-brands-strip" aria-label="Vörumerki sem við bjóðum upp á">
+      {%- for i in (1..8) -%}
+        {%- assign logo_key = 'logo_' | append: i -%}
+        {%- assign link_key = 'link_' | append: i -%}
+        {%- if section.settings[logo_key] != blank -%}
+          {%- if section.settings[link_key] != blank -%}
+            <a href="{{ section.settings[link_key] }}">
+              <img src="{{ section.settings[logo_key] | image_url: height: 80 }}" alt="Vörumerki {{ i }}" height="40" loading="lazy">
+            </a>
+          {%- else -%}
+            <img src="{{ section.settings[logo_key] | image_url: height: 80 }}" alt="Vörumerki {{ i }}" height="40" loading="lazy">
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vörumerki",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Fyrirsögn" },
+    { "type": "image_picker", "id": "logo_1", "label": "Logo 1" }, { "type": "url", "id": "link_1", "label": "Hlekkur 1" },
+    { "type": "image_picker", "id": "logo_2", "label": "Logo 2" }, { "type": "url", "id": "link_2", "label": "Hlekkur 2" },
+    { "type": "image_picker", "id": "logo_3", "label": "Logo 3" }, { "type": "url", "id": "link_3", "label": "Hlekkur 3" },
+    { "type": "image_picker", "id": "logo_4", "label": "Logo 4" }, { "type": "url", "id": "link_4", "label": "Hlekkur 4" },
+    { "type": "image_picker", "id": "logo_5", "label": "Logo 5" }, { "type": "url", "id": "link_5", "label": "Hlekkur 5" },
+    { "type": "image_picker", "id": "logo_6", "label": "Logo 6" }, { "type": "url", "id": "link_6", "label": "Hlekkur 6" },
+    { "type": "image_picker", "id": "logo_7", "label": "Logo 7" }, { "type": "url", "id": "link_7", "label": "Hlekkur 7" },
+    { "type": "image_picker", "id": "logo_8", "label": "Logo 8" }, { "type": "url", "id": "link_8", "label": "Hlekkur 8" }
+  ],
+  "presets": [{ "name": "Vörumerki" }]
+}
+{% endschema %}

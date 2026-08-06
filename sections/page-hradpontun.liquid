@@ -1,0 +1,72 @@
+{% comment %}sections/page-hradpontun.liquid — Hraðpöntun (Quick Order){% endcomment %}
+<div class="rf-container rf-hradpontun-wrap" style="padding-top:2.5rem;padding-bottom:4rem;">
+  <h1>{{ section.settings.heading | default: 'sections.hradpontun.title' | t }}</h1>
+  <p style="color:var(--rf-stal);max-width:60ch;margin-bottom:2rem;">{{ section.settings.subtext | default: 'sections.hradpontun.intro' | t }}</p>
+
+  <form id="rf-hradpontun-form" novalidate>
+    <div class="rf-field" style="margin-bottom:1.25rem;">
+      <label class="rf-label" for="HradpontunTextarea">{{ 'sections.hradpontun.title' | t }}</label>
+      <textarea
+        id="HradpontunTextarea"
+        class="rf-textarea"
+        rows="8"
+        placeholder="{{ 'sections.hradpontun.textarea_placeholder' | t }}"
+        style="font-family:var(--font-data);font-size:.9rem;"
+      ></textarea>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+      <button type="button" id="rf-hradpontun-parse" class="btn btn--primary">
+        {{ 'sections.hradpontun.parse' | t }}
+      </button>
+
+      <label class="btn btn--secondary" style="cursor:pointer;">
+        {{ 'sections.hradpontun.upload_file' | t }}
+        <input type="file" id="rf-hradpontun-file" accept=".csv,.xls,.xlsx" class="visually-hidden">
+      </label>
+    </div>
+  </form>
+
+  {% comment %} Resolution table {% endcomment %}
+  <div id="rf-resolution-table" hidden style="margin-top:1.5rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+      <h2 style="margin:0;font-size:1.1rem;">{{ 'sections.hradpontun.columns.product' | t }}</h2>
+      <div id="rf-hradpontun-total" style="font-size:.9375rem;"></div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="rf-list-table rf-resolution-table" aria-live="polite">
+        <thead>
+          <tr>
+            <th>{{ 'sections.hradpontun.columns.code' | t }}</th>
+            <th>{{ 'sections.hradpontun.columns.product' | t }}</th>
+            <th>{{ 'sections.hradpontun.columns.qty' | t }}</th>
+            <th>{{ 'sections.hradpontun.columns.price' | t }}</th>
+            <th>{{ 'sections.hradpontun.columns.status' | t }}</th>
+          </tr>
+        </thead>
+        <tbody id="rf-resolution-tbody"></tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <button type="button" id="rf-hradpontun-order" class="btn btn--primary" hidden>
+        {{ 'sections.hradpontun.add_all' | t }}
+      </button>
+    </div>
+  </div>
+</div>
+
+{% comment %} SheetJS for xlsx — loaded only on this page {% endcomment %}
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+{% schema %}
+{
+  "name": "Hraðpöntun",
+  "tag": "div",
+  "settings": [
+    { "type": "text",     "id": "heading",  "label": "Fyrirsögn",  "default": "Hraðpöntun" },
+    { "type": "textarea", "id": "subtext",  "label": "Undirtexti", "default": "Límdu inn vörunúmer eða EAN kóða ásamt magni. Við finnum vörurnar og þú getur sett allt í körfuna með einum smelli." }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{% comment %}
+  stock-badge.liquid
+  Usage: {% render 'stock-badge', variant: variant %}
+{% endcomment %}
+
+{% liquid
+  assign stk = variant | default: product.selected_or_first_available_variant
+  assign qty = stk.inventory_quantity | default: 0
+  assign policy = stk.inventory_policy
+  assign management = stk.inventory_management
+
+  if management == blank or management == 'not_managed'
+    assign badge_type = 'til'
+    assign badge_text = 'products.product.in_stock' | t
+  elsif stk.available
+    if qty > 0 and qty <= 5
+      assign badge_type = 'til'
+      assign badge_text = 'products.product.low_stock' | t: count: qty
+    else
+      assign badge_type = 'til'
+      assign badge_text = 'products.product.in_stock' | t
+    endif
+  else
+    if policy == 'continue'
+      assign badge_type = 'vaentanlegt'
+      assign badge_text = 'products.product.incoming' | t
+    else
+      assign badge_type = 'uppselt'
+      assign badge_text = 'products.product.out_of_stock' | t
+    endif
+  endif
+%}
+
+<span class="rf-stock rf-stock--{{ badge_type }}" data-stock-badge>
+  {{- badge_text -}}
+</span>

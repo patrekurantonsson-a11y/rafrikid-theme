@@ -1,0 +1,83 @@
+{% comment %}
+  verd.liquid — Single source of truth for price formatting.
+
+  Usage:
+    {% render 'verd', product: product, variant: variant, show_fagverd: true %}
+
+  Arguments:
+    product     — product object (optional if variant provided)
+    variant     — variant object (required for price data)
+    show_fagverd — show Fagverð badge for trade customers (optional, default false)
+    size        — 'large' | 'small' (optional, default normal)
+
+  Rules:
+  - VAT rate is 24% (ISK electrical goods).
+  - Shopify stores prices tax-inclusive in Iceland.
+  - Excl. figure = price / 1.24, rounded to whole krónur.
+  - The incl. figure is always the source; excl. is derived. No rounding drift.
+  - Both figures always shown; the toggle controls which is primary.
+  - ISK format: 12.450 kr. (period as thousands separator, no decimal, space before kr.)
+{% endcomment %}
+
+{% liquid
+  assign the_variant = variant
+  if the_variant == blank and product != blank
+    assign the_variant = product.selected_or_first_available_variant
+  endif
+
+  if the_variant == blank
+    echo ''
+  endif
+
+  assign price_med_vsk = the_variant.price | default: 0
+  assign price_ant_vsk_raw = price_med_vsk | divided_by: 1.24 | round
+
+  assign fagverd_med = false
+  assign fagverd_ant_raw = 0
+  if show_fagverd and the_variant.metafields.custom.verd_fagadili != blank
+    assign fagverd_price_raw = the_variant.metafields.custom.verd_fagadili | times: 100
+    assign fagverd_med = fagverd_price_raw
+    assign fagverd_ant_raw = fagverd_price_raw | divided_by: 1.24 | round
+  endif
+
+  assign is_trade_customer = false
+  if customer and customer.tags contains 'fagadili'
+    assign is_trade_customer = true
+  endif
+
+  assign compare_price = the_variant.compare_at_price
+  assign on_sale = false
+  if compare_price > price_med_vsk
+    assign on_sale = true
+  endif
+%}
+
+<div class="rf-price{% if size == 'large' %} rf-price--large{% endif %}">
+
+  {%- comment -%} Show trade price if applicable {%- endcomment -%}
+  {% if is_trade_customer and fagverd_med %}
+
+    <span class="rf-price__primary" data-price-mode="med" aria-label="{{ fagverd_med | money_without_trailing_zeros }} með virðisaukaskatti">
+      {{- fagverd_med | money_without_trailing_zeros -}}
+    </span>
+    <span class="rf-price__secondary" data-price-mode="ant" aria-label="{{ fagverd_ant_raw | times: 100 | money_without_trailing_zeros }} án virðisaukaskatts">
+      {{- fagverd_ant_raw | times: 100 | money_without_trailing_zeros }} {{ 'vat.without_vat_short' | t -}}
+    </span>
+    <span class="rf-price__fagverd-badge">{{ 'products.product.fagverd_badge' | t }}</span>
+
+  {% else %}
+
+    <span class="rf-price__primary" data-price-mode="med" aria-label="{{ price_med_vsk | money_without_trailing_zeros }} með virðisaukaskatti">
+      {{- price_med_vsk | money_without_trailing_zeros -}}
+    </span>
+    <span class="rf-price__secondary" data-price-mode="ant" aria-label="{{ price_ant_vsk_raw | times: 100 | money_without_trailing_zeros }} án virðisaukaskatts">
+      {{- price_ant_vsk_raw | times: 100 | money_without_trailing_zeros }} {{ 'vat.without_vat_short' | t -}}
+    </span>
+
+    {%- if on_sale -%}
+      <span class="visually-hidden">{{ 'products.product.on_sale' | t }}</span>
+    {%- endif -%}
+
+  {% endif %}
+
+</div>

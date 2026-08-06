@@ -1,0 +1,39 @@
+{% comment %}sections/newsletter.liquid{% endcomment %}
+<section class="rf-newsletter">
+  <div class="rf-container rf-newsletter__inner">
+    <div>
+      <h2 class="rf-newsletter__title">{{ section.settings.heading | default: 'Fáðu tilboð og nýjungar í póstinn' }}</h2>
+      {%- if section.settings.subtext != blank -%}
+        <p style="opacity:.75;margin-top:.5rem;font-size:.95rem;">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+    </div>
+    <form class="rf-newsletter__form" action="/contact#newsletter" method="post" id="newsletter-form">
+      <input type="hidden" name="form_type" value="customer">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label for="NewsletterEmail" class="visually-hidden">{{ 'newsletter.placeholder' | t }}</label>
+      <input
+        type="email"
+        id="NewsletterEmail"
+        name="contact[email]"
+        class="rf-newsletter__input"
+        placeholder="{{ 'newsletter.placeholder' | t }}"
+        required
+        aria-required="true"
+      >
+      <button type="submit" class="btn btn--primary">{{ 'newsletter.submit' | t }}</button>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fréttabréf",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Fyrirsögn", "default": "Fáðu tilboð og nýjungar í póstinn" },
+    { "type": "text", "id": "subtext", "label": "Undirtexti", "default": "" }
+  ],
+  "presets": [{ "name": "Fréttabréf" }]
+}
+{% endschema %}

@@ -1,0 +1,134 @@
+{% comment %}sections/main-register.liquid — Nýskráning with individual/company tabs{% endcomment %}
+<div class="rf-container" style="padding-top:3rem;padding-bottom:5rem;max-width:560px;">
+  <h1>{{ 'customers.register.title' | t }}</h1>
+
+  {%- if form.errors -%}
+    <div role="alert" style="background:#fdecea;border:1px solid #f5c2c7;padding:1rem;border-radius:var(--border-radius);margin-bottom:1.5rem;">
+      <ul style="margin:0;padding-left:1.25rem;">
+        {%- for error in form.errors -%}
+          <li>{{ form.errors.messages[error] }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  {% comment %} Tabs {% endcomment %}
+  <div role="tablist" aria-label="Tegund reiknings" style="display:flex;border-bottom:2px solid var(--color-border);margin-bottom:2rem;">
+    <button
+      role="tab"
+      id="tab-individual"
+      aria-controls="panel-individual"
+      aria-selected="true"
+      data-reg-tab="individual"
+      class="rf-vat-toggle__btn active"
+      style="color:var(--color-base-text);padding:.65rem 1.25rem;font-size:.9375rem;border-bottom:3px solid transparent;margin-bottom:-2px;"
+    >{{ 'customers.register.tab_individual' | t }}</button>
+    <button
+      role="tab"
+      id="tab-company"
+      aria-controls="panel-company"
+      aria-selected="false"
+      data-reg-tab="company"
+      class="rf-vat-toggle__btn"
+      style="color:var(--color-base-text);padding:.65rem 1.25rem;font-size:.9375rem;border-bottom:3px solid transparent;margin-bottom:-2px;"
+    >{{ 'customers.register.tab_company' | t }}</button>
+  </div>
+
+  {% comment %} Individual panel {% endcomment %}
+  <div id="panel-individual" role="tabpanel" aria-labelledby="tab-individual" data-reg-panel="individual">
+    {% form 'create_customer' %}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="rf-field">
+          <label class="rf-label" for="FirstName">{{ 'customers.register.first_name' | t }}</label>
+          <input type="text" id="FirstName" name="customer[first_name]" class="rf-input" required autocomplete="given-name">
+        </div>
+        <div class="rf-field">
+          <label class="rf-label" for="LastName">{{ 'customers.register.last_name' | t }}</label>
+          <input type="text" id="LastName" name="customer[last_name]" class="rf-input" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="Email">{{ 'customers.register.email' | t }}</label>
+        <input type="email" id="Email" name="customer[email]" class="rf-input" required autocomplete="email">
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="Password">{{ 'customers.register.password' | t }}</label>
+        <input type="password" id="Password" name="customer[password]" class="rf-input" required autocomplete="new-password" minlength="5">
+      </div>
+      <button type="submit" class="btn btn--primary btn--full" style="margin-top:.5rem;">{{ 'customers.register.create_account' | t }}</button>
+    {% endform %}
+  </div>
+
+  {% comment %} Company panel {% endcomment %}
+  <div id="panel-company" role="tabpanel" aria-labelledby="tab-company" data-reg-panel="company" hidden>
+    {%- if form.posted_successfully? -%}
+      <div role="alert" style="background:#eaf7ed;border:1px solid #b2dfcb;padding:1.25rem;border-radius:var(--border-radius);">
+        {{ 'customers.register.company_approval_note' | t }}
+      </div>
+    {%- else -%}
+    {% form 'create_customer' %}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="rf-field">
+          <label class="rf-label" for="CompFirstName">{{ 'customers.register.first_name' | t }}</label>
+          <input type="text" id="CompFirstName" name="customer[first_name]" class="rf-input" required autocomplete="given-name">
+        </div>
+        <div class="rf-field">
+          <label class="rf-label" for="CompLastName">{{ 'customers.register.last_name' | t }}</label>
+          <input type="text" id="CompLastName" name="customer[last_name]" class="rf-input" required autocomplete="family-name">
+        </div>
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="CompEmail">{{ 'customers.register.email' | t }}</label>
+        <input type="email" id="CompEmail" name="customer[email]" class="rf-input" required autocomplete="email">
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="CompPassword">{{ 'customers.register.password' | t }}</label>
+        <input type="password" id="CompPassword" name="customer[password]" class="rf-input" required minlength="5">
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="CompanyName">{{ 'customers.register.company_name' | t }}</label>
+        <input type="text" id="CompanyName" name="customer[note][company_name]" class="rf-input" required autocomplete="organization">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="rf-field">
+          <label class="rf-label" for="Kennitala">{{ 'customers.register.kennitala' | t }}</label>
+          <input type="text" id="Kennitala" name="customer[note][kennitala]" class="rf-input" data-kennitala pattern="[0-9]{10}" inputmode="numeric" maxlength="10" required>
+          <span id="kennitala-error" class="rf-field-error" hidden>{{ 'customers.register.kennitala_error' | t }}</span>
+        </div>
+        <div class="rf-field">
+          <label class="rf-label" for="VskNumer">{{ 'customers.register.vat_number' | t }}</label>
+          <input type="text" id="VskNumer" name="customer[note][vsk_numer]" class="rf-input" inputmode="numeric">
+        </div>
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="CompAddress">{{ 'customers.register.address' | t }}</label>
+        <input type="text" id="CompAddress" name="customer[note][heimilisfang]" class="rf-input" autocomplete="street-address">
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="CompPhone">{{ 'customers.register.phone' | t }}</label>
+        <input type="tel" id="CompPhone" name="customer[phone]" class="rf-input" autocomplete="tel">
+      </div>
+      <div class="rf-field">
+        <label class="rf-label" for="Reference">{{ 'customers.register.reference' | t }}</label>
+        <input type="text" id="Reference" name="customer[note][reference]" class="rf-input">
+      </div>
+      <input type="hidden" name="customer[note][account_type]" value="company">
+      <input type="hidden" name="customer[note][needs_approval]" value="true">
+      <button type="submit" class="btn btn--primary btn--full" style="margin-top:.5rem;">{{ 'customers.register.company_apply' | t }}</button>
+    {% endform %}
+    {%- endif -%}
+  </div>
+
+  <p style="text-align:center;margin-top:1.5rem;font-size:.875rem;color:var(--rf-stal);">
+    {{ 'customers.login.no_account' | t }}?
+    <a href="{{ routes.account_login_url }}">{{ 'customers.login.sign_in' | t }}</a>
+  </p>
+</div>
+
+{% schema %}
+{
+  "name": "Nýskráning",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

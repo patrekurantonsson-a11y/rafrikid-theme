@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_quote_button": true,
+        "show_related": true
+      }
+    }
+  },
+  "order": ["main"]
+}

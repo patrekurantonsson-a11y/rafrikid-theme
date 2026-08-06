@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-search",
+      "settings": {
+        "headline": "Raflagnaefni. Fljót afhending.",
+        "subheading": "Yfir 15.000 vörur á lager. Sendum um allt land — eða sækja á staðnum í Þorlákshöfn virka daga 8–17.",
+        "search_placeholder": "Leita að vöru, vörunúmeri eða framleiðanda...",
+        "quick_links": "Hraðpöntun|/pages/hradpontun, Ljós|/collections/ljos, Rofar|/collections/rofar",
+        "cta1_text": "Skoða vöruúrval",
+        "cta2_text": "Innskráning fagaðila"
+      }
+    },
+    "categories": {
+      "type": "category-grid",
+      "settings": {
+        "heading": "Vöruflokkar"
+      },
+      "blocks": {
+        "cat1":  { "type": "category", "settings": { "label": "Ljós og perur",              "url": "/collections/ljos-og-perur",   "icon": "bulb"        } },
+        "cat2":  { "type": "category", "settings": { "label": "Lampar og ljósabúnaður",      "url": "/collections/lampar",           "icon": "lamp"        } },
+        "cat3":  { "type": "category", "settings": { "label": "Rofar og tenglar",            "url": "/collections/rofar-og-tenglar", "icon": "switch"      } },
+        "cat4":  { "type": "category", "settings": { "label": "Raflagnaefni",                "url": "/collections/raflagnaefni",     "icon": "bolt"        } },
+        "cat5":  { "type": "category", "settings": { "label": "Töflubúnaður og varnir",      "url": "/collections/toflubunadur",     "icon": "panel"       } },
+        "cat6":  { "type": "category", "settings": { "label": "Kaplar og vír",               "url": "/collections/kaplar-og-vir",   "icon": "cable"       } },
+        "cat7":  { "type": "category", "settings": { "label": "Iðnstýringar og sjálfvirkni", "url": "/collections/idnstyringar",     "icon": "gear"        } },
+        "cat8":  { "type": "category", "settings": { "label": "Hleðslustöðvar og rafbílar",  "url": "/collections/hledslustodvar",   "icon": "charger"     } },
+        "cat9":  { "type": "category", "settings": { "label": "Sólarorka og rafgeymar",      "url": "/collections/solarorka",        "icon": "solar"       } },
+        "cat10": { "type": "category", "settings": { "label": "Loftræsting og hiti",         "url": "/collections/loftrae-sting",    "icon": "ventilation" } },
+        "cat11": { "type": "category", "settings": { "label": "Verkfæri og mælitæki",        "url": "/collections/verkfaeri",        "icon": "tool"        } },
+        "cat12": { "type": "category", "settings": { "label": "Útsala",                      "url": "/collections/utsala",           "icon": "tag",        "highlight": true } }
+      },
+      "blocks_order": ["cat1","cat2","cat3","cat4","cat5","cat6","cat7","cat8","cat9","cat10","cat11","cat12"]
+    },
+    "audience": {
+      "type": "audience-panels",
+      "settings": {
+        "heading": "Tvær leiðir að versla"
+      }
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "Vinsælar vörur",
+        "products_to_show": 8
+      }
+    },
+    "delivery": {
+      "type": "delivery-info",
+      "settings": {
+        "heading": "Afhendingarleiðir"
+      }
+    },
+    "brands": {
+      "type": "brand-strip",
+      "settings": {
+        "heading": "Vörumerki sem við bjóðum upp á"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Fáðu tilboð og nýjungar í póstinn"
+      }
+    }
+  },
+  "order": ["hero", "categories", "audience", "featured", "delivery", "brands", "newsletter"]
+}
