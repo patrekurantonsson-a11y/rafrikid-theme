@@ -1,9 +1,0 @@
-uploads = []
-generated = []
-
-[[outputs]]
-id = "fXJTLVC8pqp7qMyoA-kh3"
-uri = "file://rafrikid-theme.zip"
-type = "unspecified"
-title = "rafrikid-theme.zip — kalon-inspired restyled"
-description = "Updated theme with massive left-aligned display text, pill CTAs, 6px border radius, and topographic contour background."
