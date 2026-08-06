@@ -5,6 +5,10 @@
     },
     "password_page": {
       "coming_soon": "Rafríkið — Coming soon"
+    },
+    "meta": {
+      "author": "By {{author}}",
+      "tags": "Tagged: {{tags}}"
     }
   },
   "404": {
@@ -120,7 +124,11 @@
     "checkout": "Checkout",
     "view_cart": "View cart",
     "update": "Update cart",
-    "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout"
+    "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout",
+    "item": {
+      "one": "item",
+      "other": "items"
+    }
   },
   "customers": {
     "login": {
@@ -159,6 +167,26 @@
       "details": "Account details",
       "orders": "Orders",
       "order_history": "Order history"
+    },
+    "addresses": {
+      "add_new": "Add a new address",
+      "default_address": "Default address",
+      "delete": "Delete",
+      "delete_confirm": "Are you sure?",
+      "edit": "Edit",
+      "title": "Addresses"
+    },
+    "order": {
+      "billing_address": "Billing address",
+      "date": "Date",
+      "fulfillment_status": "Fulfillment status",
+      "payment_status": "Payment status",
+      "shipping": "Shipping",
+      "shipping_address": "Shipping address",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "title": "Order {{name}}",
+      "total": "Total"
     }
   },
   "accessibility": {
@@ -180,12 +208,20 @@
   "pagination": {
     "label": "Pagination",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "page": "Page {{number}}"
   },
   "blogs": {
     "article": {
       "read_more": "Read more",
-      "back_to_blog": "Back"
+      "back_to_blog": "Back",
+      "written_by": "By {{author}}"
+    },
+    "comments": {
+      "moderated": "Please note: comments are moderated before they appear.",
+      "no_comments": "No comments yet.",
+      "success": "Comment received — it is awaiting moderation.",
+      "title": "Comments"
     }
   },
   "sections": {
@@ -210,7 +246,75 @@
         "price": "Price",
         "status": "Status"
       },
-      "upload_file": "Upload file (.csv or .xlsx)"
+      "upload_file": "Upload file (.csv or .xlsx)",
+      "not_found": "Not found",
+      "total": "Total"
+    },
+    "audience": {
+      "consumer_cta": "Browse products",
+      "consumer_desc": "Clear descriptions, prices incl. VAT and home delivery.",
+      "consumer_title": "For homes",
+      "title": "Two ways to shop",
+      "trade_cta": "Open a trade account",
+      "trade_desc": "Net prices, quick ordering by SKU and invoice billing.",
+      "trade_title": "For professionals"
+    },
+    "delivery": {
+      "pickup_desc": "In Þorlákshöfn. Open Mon–Fri 08:00–17:00.",
+      "pickup_title": "In-store pickup",
+      "routes_desc": "Regular routes to Selfoss and Holtagarðar in Reykjavík.",
+      "routes_title": "Scheduled routes",
+      "shipping_desc": "We ship with Pósturinn and private carriers. Delivery in 1–3 business days.",
+      "shipping_title": "Nationwide delivery",
+      "title": "Delivery options"
     }
+  },
+  "addresses": {
+    "address1": "Address",
+    "address2": "Apartment, suite, etc.",
+    "cancel": "Cancel",
+    "city": "City",
+    "country": "Country",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "phone": "Phone",
+    "province": "Province",
+    "save": "Save",
+    "zip": "Postal code"
+  },
+  "contact": {
+    "form": {
+      "email": "Email",
+      "message": "Message",
+      "name": "Name",
+      "phone": "Phone",
+      "post_success": "Message received. We will reply shortly.",
+      "send": "Send"
+    }
+  },
+  "delivery": {
+    "free_above": "Free shipping over {{amount}}",
+    "lead_time": "Delivery time",
+    "nationwide": "Nationwide delivery",
+    "pickup": "Pick up in store in Þorlákshöfn"
+  },
+  "forms": {
+    "address": "Address",
+    "city": "City",
+    "company_name": "Company name",
+    "email": "Email",
+    "email_error": "The email address is not valid.",
+    "kennitala": "Kennitala (ID number)",
+    "message": "Message",
+    "name": "Name",
+    "password": "Password",
+    "phone": "Phone",
+    "required_error": "This field is required.",
+    "zip": "Postal code"
+  },
+  "hero": {
+    "headline": "Electrical supplies, lighting and cabling — all in one place",
+    "search_placeholder": "Search by product, SKU or barcode",
+    "subheading": "Nationwide delivery. Pick up in store in Þorlákshöfn."
   }
 }
