@@ -1,2 +1,2 @@
 - [GitHub push via connector](github-push.md) — gitPush callback needs source-control credential; use scripts/github-push.mjs + connectors SDK instead
-- [Shopify theme zip packaging](shopify-theme-packaging.md) — "not a valid section type" was a nested-zip packaging bug, not Liquid; theme dirs must sit at zip root
+- [Shopify theme gotchas](shopify-theme-packaging.md) — `"default": ""` in schema makes Shopify silently drop the file ("not a valid section type"); only server-side save reveals it; zip needs theme dirs at root
