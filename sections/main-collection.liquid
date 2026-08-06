@@ -55,7 +55,7 @@
                       name="{{ value.param_name }}"
                       value="{{ value.value }}"
                       {% if value.active %}checked{% endif %}
-                      onchange="this.form ? this.form.submit() : window.location.href = '{{ value.url_to_add }}'"
+                      onchange="window.location.href = this.checked ? '{{ value.url_to_add }}' : '{{ value.url_to_remove }}'"
                     >
                     {{ value.label }} <span style="color:var(--rf-stal);">({{ value.count }})</span>
                   </label>
@@ -90,7 +90,7 @@
             <div class="rf-filter-group__title">{{ filter.label }}</div>
             {%- for value in filter.values -%}
               <label style="display:flex;align-items:center;gap:.5rem;font-size:.875rem;cursor:pointer;padding:.25rem 0;">
-                <input type="checkbox" {% if value.active %}checked{% endif %} onchange="window.location.href = '{{ value.url_to_add }}'">
+                <input type="checkbox" {% if value.active %}checked{% endif %} onchange="window.location.href = this.checked ? '{{ value.url_to_add }}' : '{{ value.url_to_remove }}'"
                 {{ value.label }} <span style="color:var(--rf-stal);">({{ value.count }})</span>
               </label>
             {%- endfor -%}
