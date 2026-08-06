@@ -1,0 +1,3 @@
+- [GitHub push via connector](github-push.md) — gitPush callback needs source-control credential; use scripts/github-push.mjs + connectors SDK instead
+- [Shopify theme gotchas](shopify-theme-packaging.md) — `"default": ""` in schema makes Shopify silently drop the file ("not a valid section type"); only server-side save reveals it; zip needs theme dirs at root
+- [Post-commit hook rebase timeouts](git-hook-rebase-timeouts.md) — a post-commit GitHub auto-push hook made every rebase pick hang; hook now disabled

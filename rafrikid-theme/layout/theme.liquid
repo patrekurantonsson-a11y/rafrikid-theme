@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="is" class="no-js" data-vat-default="{% if customer and customer.tags contains 'fagadili' %}ant{% else %}med{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#15191E">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'pagination.page' | t: number: current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.password_enabled -%}
+    <meta name="robots" content="noindex, nofollow">
+  {%- endif -%}
+
+  {%- comment -%} Google Fonts: Archivo (display), Public Sans (body), IBM Plex Mono (data) {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Public+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%}
+    VAT pre-paint: read localStorage before first paint so the correct price
+    is shown without any flash, even on slow connections.
+    Must run before </head> and before any CSS that depends on .vat-ant.
+  {%- endcomment -%}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('rafrikid_vsk');
+        // For trade customers with no stored preference, fall back to the
+        // server-side default already embedded on <html data-vat-default>.
+        var mode = stored || document.documentElement.dataset.vatDefault || 'med';
+        if (mode === 'ant') {
+          document.documentElement.classList.add('vat-ant');
+        }
+      } catch (e) { /* localStorage blocked (private browsing etc.) — silent */ }
+    })();
+  </script>
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    // Make locale strings available to JS
+    window.theme = window.theme || {};
+    window.theme.t = {
+      cart_empty: {{ 'cart.empty' | t | json }},
+      total: {{ 'cart.subtotal' | t | json }},
+      total_excl: {{ 'cart.subtotal_excl' | t | json }},
+      vat_24: {{ 'cart.vat' | t | json }},
+      shipping_note: {{ 'cart.shipping_note' | t | json }},
+      checkout: {{ 'cart.checkout' | t | json }},
+      view_cart: {{ 'cart.view_cart' | t | json }},
+      in_stock: {{ 'products.product.in_stock' | t | json }},
+      out_of_stock: {{ 'products.product.out_of_stock' | t | json }}
+    };
+    // VAT default: logged-in trade customers default to excl.
+    window.theme.vatDefault = {% if customer and customer.tags contains 'fagadili' %}'ant'{% else %}'med'{% endif %};
+  </script>
+</head>
+
+<body
+  class="{% if customer and customer.tags contains 'fagadili' %}is-trade{% else %}is-consumer{% endif %}"
+  data-vat-default="{% if customer and customer.tags contains 'fagadili' %}ant{% else %}med{% endif %}"
+>
+
+  <a href="#MainContent" class="skip-to-content-link">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {%- section 'header' -%}
+
+  {%- comment -%} Cart drawer overlay {%- endcomment -%}
+  <div id="rf-cart-overlay" class="rf-cart-drawer__overlay" aria-hidden="true"></div>
+
+  {%- render 'cart-drawer' -%}
+
+  <main id="MainContent" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {%- section 'footer' -%}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+</body>
+</html>

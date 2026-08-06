@@ -87,10 +87,23 @@ async function createBlobs(files) {
 }
 
 // ── 5. Helper: commit a tree to a branch ─────────────────────────────────────
-async function commitToBranch(branch, tree, message) {
+async function commitToBranch(branch, tree, message, { useBasTree = false } = {}) {
+  // When useBasTree is true we merge ON TOP of the existing branch tree so
+  // files we don't touch (e.g. settings_data.json saved by the theme editor)
+  // are preserved instead of being wiped.
+  let baseTreeSha;
+  if (useBasTree) {
+    const { status: refSt, json: refD } = await ghFetch(`/repos/${owner}/${REPO}/git/ref/heads/${branch}`);
+    if (refSt === 200) {
+      const { json: commitD } = await ghFetch(`/repos/${owner}/${REPO}/git/commits/${refD.object.sha}`);
+      baseTreeSha = commitD.tree?.sha;
+    }
+  }
+
+  const treeBody = baseTreeSha ? { base_tree: baseTreeSha, tree } : { tree };
   const { status: treeStatus, json: treeData } = await ghFetch(`/repos/${owner}/${REPO}/git/trees`, {
     method: "POST",
-    body: JSON.stringify({ tree })
+    body: JSON.stringify(treeBody)
   });
   if (treeStatus !== 201) { console.error(`Tree failed (${branch}):`, treeStatus, treeData); process.exit(1); }
 
@@ -129,15 +142,31 @@ const tracked = execSync("git ls-files", { cwd: ROOT })
 // All tracked files → main branch (full workspace)
 const allFiles = tracked.map(p => ({ repoPath: p, fsPath: resolve(ROOT, p) }));
 
-// Only theme files → shopify branch, with rafrikid-theme/ prefix stripped
+// Only theme files → shopify branch, with rafrikid-theme/ prefix stripped.
+// We deliberately EXCLUDE files that Shopify writes back when the merchant
+// saves in the theme editor — pushing those would wipe their customisations.
+//   config/settings_data.json  — stores all theme-editor values
+//   templates/*.json           — stores section layout & settings per template
+// These are preserved via base_tree (we merge, not replace).
 const THEME_DIRS = ["assets", "config", "layout", "locales", "sections", "snippets", "templates"];
+const EDITOR_MANAGED = [
+  "config/settings_data.json",
+  // any templates/<name>.json (but keep templates/*.liquid)
+];
 const themeFiles = tracked
   .filter(p => p.startsWith(THEME_DIR + "/"))
   .filter(p => THEME_DIRS.includes(p.slice(THEME_DIR.length + 1).split("/")[0]))
   .map(p => ({
     repoPath: p.slice(THEME_DIR.length + 1), // strip "rafrikid-theme/"
     fsPath:   resolve(ROOT, p)
-  }));
+  }))
+  .filter(({ repoPath }) => {
+    // Exclude settings_data.json
+    if (EDITOR_MANAGED.includes(repoPath)) return false;
+    // Exclude templates/*.json (but allow templates/*.liquid)
+    if (repoPath.startsWith("templates/") && repoPath.endsWith(".json")) return false;
+    return true;
+  });
 
 console.log(`▸ main branch: ${allFiles.length} files`);
 console.log(`▸ shopify branch: ${themeFiles.length} theme files (root-level)`);
@@ -160,7 +189,7 @@ await commitToBranch("main", mainBlobs, latestMessage);
 console.log("\n── shopify branch (Shopify import target) ───────────────────────");
 const shopifyBlobs = await createBlobs(themeFiles);
 console.log(`▸ Blobs: ${shopifyBlobs.length}`);
-await commitToBranch("shopify", shopifyBlobs, latestMessage);
+await commitToBranch("shopify", shopifyBlobs, latestMessage, { useBasTree: true });
 
 console.log(`\n✓ Done!`);
 console.log(`  main    → https://github.com/${owner}/${REPO}/tree/main`);
