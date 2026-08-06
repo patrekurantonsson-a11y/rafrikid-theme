@@ -557,22 +557,37 @@ class HradPontun {
     if (!row) return;
 
     try {
-      const url = `/search/suggest.json?q=${encodeURIComponent(code)}&resources[type]=product&resources[limit]=1`;
+      const url = `/search/suggest.json?q=${encodeURIComponent(code)}&resources[type]=product&resources[limit]=5&resources[options][fields]=title,product_type,variants.sku,variants.barcode`;
       const res = await fetch(url);
       const data = await res.json();
-      const product = data.resources?.results?.products?.[0];
+      const products = data.resources?.results?.products || [];
 
-      if (!product) {
+      if (!products.length) {
         row.children[1].textContent = 'Fannst ekki';
         row.children[1].classList.add('status-err');
         row.dataset.variantId = '';
         return;
       }
 
-      // Get variant id from product URL
-      const pRes = await fetch(`${product.url}.js`);
-      const pData = await pRes.json();
-      const variant = pData.variants?.[0];
+      // Find the product whose variant SKU/barcode exactly matches the code,
+      // falling back to the first result if no exact match.
+      let matchedProduct = products[0];
+      let matchedVariant = null;
+
+      for (const p of products) {
+        const pRes2 = await fetch(`${p.url}.js`);
+        const pData2 = await pRes2.json();
+        const exact = pData2.variants?.find(v =>
+          v.sku?.toLowerCase() === code.toLowerCase() ||
+          v.barcode?.toLowerCase() === code.toLowerCase()
+        );
+        if (exact) { matchedProduct = p; matchedVariant = exact; break; }
+        if (!matchedVariant && pData2.variants?.[0]) matchedVariant = pData2.variants[0];
+      }
+
+      const product = matchedProduct;
+      // pData already resolved above; just use matchedVariant
+      const variant = matchedVariant;
 
       row.children[1].innerHTML = `<a href="${product.url}">${product.title}</a>`;
       row.children[3].textContent = variant ? formatISK(variant.price * qty) : '—';
@@ -600,7 +615,7 @@ class HradPontun {
       totalEl.innerHTML = `
         <strong>${formatISK(totalAura)}</strong> með vsk
         &nbsp;/&nbsp;
-        <span style="color:var(--rf-stal)">${formatISK(Math.round(totalAura / VAT_RATE * 100))}</span> án vsk
+        <span style="color:var(--rf-stal)">${formatISK(Math.round(totalAura / VAT_RATE))}</span> án vsk
       `;
     }
   }
