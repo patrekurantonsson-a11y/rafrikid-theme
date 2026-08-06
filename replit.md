@@ -7,7 +7,7 @@ A complete Shopify Online Store 2.0 theme for Rafríkið (rafrikid.is) — an Ic
 The theme is in `rafrikid-theme/`. Zip it and upload to Shopify Admin → Online Store → Themes → Add theme → Upload zip.
 
 ```bash
-cd rafrikid-theme && zip -r ../rafrikid-theme.zip . -x ".*" -x "__MACOSX/*" -x "*/.DS_Store"
+rm -f rafrikid-theme.zip && cd rafrikid-theme && zip -r ../rafrikid-theme.zip . -x ".*" -x "__MACOSX/*" -x "*/.DS_Store"
 # Then upload rafrikid-theme.zip to Shopify admin
 ```
 

@@ -7,7 +7,7 @@
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
-    "build:theme": "cd rafrikid-theme && zip -r ../rafrikid-theme.zip . -x \".*\" -x \"__MACOSX/*\" -x \"*/.DS_Store\""
+    "build:theme": "rm -f rafrikid-theme.zip && cd rafrikid-theme && zip -r ../rafrikid-theme.zip . -x \".*\" -x \"__MACOSX/*\" -x \"*/.DS_Store\""
   },
   "private": true,
   "dependencies": {
