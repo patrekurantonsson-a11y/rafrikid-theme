@@ -624,8 +624,9 @@ class HradPontun {
       row.children[4].innerHTML   = matchedVariant?.available
         ? `<span class="status-ok">Til á lager</span>`
         : `<span class="status-err">Uppselt</span>`;
-      row.dataset.variantId = matchedVariant?.id   || '';
-      row.dataset.price     = matchedVariant?.price || 0;
+      row.dataset.variantId  = matchedVariant?.id        || '';
+      row.dataset.price      = matchedVariant?.price     || 0;
+      row.dataset.available  = matchedVariant?.available ? '1' : '0';
 
     } catch (err) {
       console.error('[Hraðpöntun] resolveCode error:', code, err);
@@ -653,13 +654,26 @@ class HradPontun {
 
   async _addAllToCart() {
     const items = [];
+    const skippedUnavailable = [];
+
     document.querySelectorAll('#rf-resolution-tbody tr').forEach(row => {
       const variantId = row.dataset.variantId;
       const qty = parseInt(row.dataset.qty) || 1;
-      if (variantId) items.push({ id: parseInt(variantId), quantity: qty });
+      if (!variantId) return;
+      if (row.dataset.available === '0') {
+        skippedUnavailable.push(row.children[0].textContent.trim());
+        return;
+      }
+      items.push({ id: parseInt(variantId), quantity: qty });
     });
 
-    if (!items.length) return;
+    if (!items.length) {
+      const msg = skippedUnavailable.length
+        ? `Allar valdar vörur eru uppselt:\n${skippedUnavailable.join(', ')}`
+        : 'Engar vörur fundust til að bæta í körfu.';
+      alert(msg);
+      return;
+    }
 
     const btn = document.getElementById('rf-hradpontun-order');
     btn.disabled = true;
@@ -675,9 +689,20 @@ class HradPontun {
       if (res.ok) {
         document.dispatchEvent(new CustomEvent('cart:updated'));
         window.cartDrawer?.open();
+        if (skippedUnavailable.length) {
+          showCartError(`Eftirfarandi vörur eru uppselt og voru ekki bætt í körfu: ${skippedUnavailable.join(', ')}`);
+        }
+      } else {
+        let errMsg = 'Villa við að bæta í körfu.';
+        try {
+          const errData = await res.json();
+          if (errData.description) errMsg = errData.description;
+          else if (errData.message) errMsg = errData.message;
+        } catch (_) { /* ignore parse error */ }
+        showCartError(errMsg);
       }
     } catch (e) {
-      alert('Villa við að bæta í körfu. Reyndu aftur.');
+      showCartError('Tengivilla. Athugaðu nettengingu og reyndu aftur.');
     } finally {
       btn.disabled = false;
       btn.textContent = 'Setja allt í körfu';
