@@ -192,9 +192,9 @@ class CartDrawer {
 
     footer.innerHTML = `
       <div class="rf-cart-totals">
-        <div class="rf-cart-totals__row"><span>${window.theme?.t?.vat_24 || 'Virðisaukaskattur (24%)'}</span><span>${formatISK(totalMed - Math.round(totalMed / VAT_RATE) * 100 / 100)}</span></div>
+        <div class="rf-cart-totals__row"><span>${window.theme?.t?.vat_24 || 'Virðisaukaskattur (24%)'}</span><span>${formatISK(totalMed - totalAnt)}</span></div>
         <div class="rf-cart-totals__row rf-cart-totals__row--total"><span>${window.theme?.t?.total || 'Samtals'}</span><span>${formatISK(totalMed)}</span></div>
-        <div class="rf-cart-totals__row text-secondary" style="font-size:.8125rem;"><span>${window.theme?.t?.total_excl || 'Samtals án vsk'}</span><span>${formatISK(Math.round(totalMed / VAT_RATE * 100))}</span></div>
+        <div class="rf-cart-totals__row text-secondary" style="font-size:.8125rem;"><span>${window.theme?.t?.total_excl || 'Samtals án vsk'}</span><span>${formatISK(totalAnt)}</span></div>
       </div>
       <p style="font-size:.8125rem;color:var(--rf-stal);margin-bottom:.75rem;">${window.theme?.t?.shipping_note || 'Sending reiknuð í næsta skrefi'}</p>
       <a href="/checkout" class="btn btn--primary btn--full" style="margin-bottom:.5rem;">${window.theme?.t?.checkout || 'Ganga frá pöntun'}</a>
