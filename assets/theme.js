@@ -518,10 +518,10 @@ class HradPontun {
       .map(l => l.trim())
       .filter(Boolean)
       .map(line => {
-        // Support: CODE,qty or CODE qty or CODE\tqty
-        const parts = line.split(/[\s,\t]+/);
-        const code = parts[0]?.trim().toUpperCase();
-        const qty = parseInt(parts[1]) || 1;
+        // Support: CODE,qty  or  CODE qty  or  CODE\tqty
+        const parts = line.split(/[\t,]+|(?<=\S)\s+(?=\S)/);
+        const code = parts[0]?.trim();
+        const qty  = Math.max(1, parseInt(parts[1]) || 1);
         return { code, qty };
       })
       .filter(r => r.code);
@@ -534,71 +534,98 @@ class HradPontun {
 
     const tableBody = document.getElementById('rf-resolution-tbody');
     const tableWrap = document.getElementById('rf-resolution-table');
-
     tableWrap.hidden = false;
-    tableBody.innerHTML = rows.map(r => `
-      <tr data-code="${r.code}" data-qty="${r.qty}">
-        <td class="rf-mono">${r.code}</td>
+
+    // Build rows and a Map<code → <tr>> so we never rely on fragile CSS selectors
+    this._rowMap = new Map();
+    tableBody.innerHTML = rows.map(r => {
+      const safeCode = r.code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return `<tr data-qty="${r.qty}">
+        <td class="rf-mono">${safeCode}</td>
         <td><span class="loading-spinner"></span></td>
         <td>${r.qty}</td>
         <td>—</td>
         <td>—</td>
-      </tr>
-    `).join('');
+      </tr>`;
+    }).join('');
 
-    // Resolve each code via predictive search
+    const trEls = tableBody.querySelectorAll('tr');
+    rows.forEach((r, i) => this._rowMap.set(r.code, trEls[i]));
+
     await Promise.all(rows.map(r => this._resolveCode(r)));
     this._updateTotal();
     document.getElementById('rf-hradpontun-order').hidden = false;
   }
 
   async _resolveCode({ code, qty }) {
-    const row = document.querySelector(`[data-code="${code}"]`);
+    const row = this._rowMap?.get(code);
     if (!row) return;
 
+    const setErr = msg => {
+      row.children[1].textContent = msg;
+      row.children[1].classList.add('status-err');
+      row.dataset.variantId = '';
+    };
+
     try {
-      const url = `/search/suggest.json?q=${encodeURIComponent(code)}&resources[type]=product&resources[limit]=5&resources[options][fields]=title,product_type,variants.sku,variants.barcode`;
-      const res = await fetch(url);
+      // Search by title, SKU and barcode. unavailable_products=show so
+      // out-of-stock products are still returned.
+      const url = `/search/suggest.json?q=${encodeURIComponent(code)}`
+        + `&resources[type]=product`
+        + `&resources[limit]=5`
+        + `&resources[options][fields]=title,product_type,variants.sku,variants.barcode`
+        + `&resources[options][unavailable_products]=show`;
+
+      const res  = await fetch(url);
+      if (!res.ok) { setErr('Leitarvilla'); return; }
       const data = await res.json();
       const products = data.resources?.results?.products || [];
 
-      if (!products.length) {
-        row.children[1].textContent = 'Fannst ekki';
-        row.children[1].classList.add('status-err');
-        row.dataset.variantId = '';
-        return;
-      }
+      if (!products.length) { setErr('Fannst ekki'); return; }
 
-      // Find the product whose variant SKU/barcode exactly matches the code,
-      // falling back to the first result if no exact match.
+      // Fetch all product variant data in parallel
+      const pDataList = await Promise.all(
+        products.map(p =>
+          fetch(`${p.url}.js`)
+            .then(r => r.ok ? r.json() : null)
+            .catch(() => null)
+        )
+      );
+
+      // 1st priority: variant whose SKU or barcode exactly matches the code
+      // 2nd priority: first variant of first product
       let matchedProduct = products[0];
-      let matchedVariant = null;
+      let matchedVariant = pDataList[0]?.variants?.[0] || null;
 
-      for (const p of products) {
-        const pRes2 = await fetch(`${p.url}.js`);
-        const pData2 = await pRes2.json();
-        const exact = pData2.variants?.find(v =>
-          v.sku?.toLowerCase() === code.toLowerCase() ||
-          v.barcode?.toLowerCase() === code.toLowerCase()
-        );
-        if (exact) { matchedProduct = p; matchedVariant = exact; break; }
-        if (!matchedVariant && pData2.variants?.[0]) matchedVariant = pData2.variants[0];
+      const codeLC = code.toLowerCase();
+      outer: for (let i = 0; i < products.length; i++) {
+        const pData = pDataList[i];
+        if (!pData) continue;
+        for (const v of (pData.variants || [])) {
+          if (
+            v.sku?.toLowerCase()     === codeLC ||
+            v.barcode?.toLowerCase() === codeLC
+          ) {
+            matchedProduct = products[i];
+            matchedVariant = v;
+            break outer;
+          }
+        }
+        // Keep first-product fallback variant even if no exact match
+        if (i === 0 && !matchedVariant) matchedVariant = pData.variants?.[0] || null;
       }
 
-      const product = matchedProduct;
-      // pData already resolved above; just use matchedVariant
-      const variant = matchedVariant;
-
-      row.children[1].innerHTML = `<a href="${product.url}">${product.title}</a>`;
-      row.children[3].textContent = variant ? formatISK(variant.price * qty) : '—';
-      row.children[4].innerHTML = variant?.available
+      row.children[1].innerHTML = `<a href="${matchedProduct.url}">${matchedProduct.title}</a>`;
+      row.children[3].textContent = matchedVariant ? formatISK(matchedVariant.price * qty) : '—';
+      row.children[4].innerHTML   = matchedVariant?.available
         ? `<span class="status-ok">Til á lager</span>`
         : `<span class="status-err">Uppselt</span>`;
-      row.dataset.variantId = variant?.id || '';
-      row.dataset.price = variant?.price || 0;
-    } catch {
-      row.children[1].textContent = 'Villa';
-      row.children[1].classList.add('status-err');
+      row.dataset.variantId = matchedVariant?.id   || '';
+      row.dataset.price     = matchedVariant?.price || 0;
+
+    } catch (err) {
+      console.error('[Hraðpöntun] resolveCode error:', code, err);
+      setErr('Villa');
     }
   }
 
