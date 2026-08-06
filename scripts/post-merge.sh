@@ -2,4 +2,3 @@
 set -e
 pnpm install --frozen-lockfile
 pnpm --filter db push
-bash "$(git rev-parse --show-toplevel)/scripts/install-hooks.sh"
