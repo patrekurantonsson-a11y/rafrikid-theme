@@ -41,6 +41,27 @@ for (const sub of ["sections", "snippets"]) {
   }
 }
 
+// Validate JSON templates: allowed keys only (Shopify rejects e.g. "blocks_order")
+const walkTemplates = (dir) => {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, entry.name);
+    if (entry.isDirectory()) { walkTemplates(p); continue; }
+    if (!entry.name.endsWith(".json")) continue;
+    let d;
+    try { d = JSON.parse(readFileSync(p, "utf8")); }
+    catch (e) { errors.push(`${p}: invalid JSON (${e.message})`); continue; }
+    for (const k of Object.keys(d)) {
+      if (!["sections", "order", "layout", "wrapper"].includes(k)) errors.push(`${p}: unexpected top-level key "${k}"`);
+    }
+    for (const [sid, sec] of Object.entries(d.sections ?? {})) {
+      for (const k of Object.keys(sec)) {
+        if (!["type", "settings", "blocks", "block_order", "disabled", "custom_css"].includes(k)) errors.push(`${p}: section "${sid}" has invalid key "${k}" (did you mean block_order?)`);
+      }
+    }
+  }
+};
+if (existsSync(join(THEME_DIR, "templates"))) walkTemplates(join(THEME_DIR, "templates"));
+
 if (errors.length) {
   console.error("Theme schema check FAILED:\n" + errors.map(e => "  - " + e).join("\n"));
   process.exit(1);
