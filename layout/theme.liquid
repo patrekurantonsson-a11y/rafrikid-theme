@@ -27,6 +27,80 @@
     <meta name="robots" content="noindex, nofollow">
   {%- endif -%}
 
+  {%- comment -%} ── Structured data for AI agents & search engines ─────────────────── {%- endcomment -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "Store", "ElectricalContractor"],
+        "@id": "https://rafrikid.is/#business",
+        "name": "Rafríkið",
+        "alternateName": ["Rafríkið ehf", "rafrikid.is"],
+        "description": "Rafríkið er einn helsti söluaðili raflagnaefna á Íslandi. Við bjóðum upp á víðtækt úrval af raflagnaefnum, ljósum, rofum, kapla, tengingum og öðrum rafvörum fyrir þar til bæra aðila og almenna neytendur. Verslanin er staðsett í Þorlákshöfn.",
+        "url": "https://rafrikid.is",
+        "telephone": "",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "",
+          "addressLocality": "Þorlákshöfn",
+          "addressCountry": "IS"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Iceland"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Raflagnaefni og rafvörur",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Raflagnaefni" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Ljós og lýsing" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Rofar og verndarbúnaður" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Kaplar og leiðarar" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Tengingar og klemmuborð" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Spangar og lagnakerfisbúnaður" } }
+          ]
+        },
+        "sameAs": [
+          "https://rafrikid.is"
+        ],
+        "knowsAbout": [
+          "raflagnaefni",
+          "electrical supplies Iceland",
+          "ljós",
+          "rofar",
+          "kaplar",
+          "rafvörur",
+          "electrical wholesaler Iceland"
+        ]
+      }
+      {%- if template == 'product' and product -%}
+      ,{
+        "@type": "Product",
+        "@id": "{{ shop.url }}{{ product.url }}#product",
+        "name": {{ product.title | json }},
+        "description": {{ product.description | strip_html | truncate: 500 | json }},
+        "url": "{{ shop.url }}{{ product.url }}",
+        "brand": {
+          "@type": "Brand",
+          "name": {{ product.vendor | json }}
+        },
+        "sku": {{ product.selected_or_first_available_variant.sku | json }},
+        "offers": {
+          "@type": "Offer",
+          "url": "{{ shop.url }}{{ product.url }}",
+          "priceCurrency": "ISK",
+          "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.0 }},
+          "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+          "seller": { "@id": "https://rafrikid.is/#business" }
+        }
+      }
+      {%- endif -%}
+    ]
+  }
+  </script>
+
   {%- comment -%} Google Fonts: Archivo (display), Public Sans (body), IBM Plex Mono (data) {%- endcomment -%}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
