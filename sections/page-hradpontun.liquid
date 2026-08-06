@@ -1,7 +1,7 @@
 {% comment %}sections/page-hradpontun.liquid — Hraðpöntun (Quick Order){% endcomment %}
 <div class="rf-container rf-hradpontun-wrap" style="padding-top:2.5rem;padding-bottom:4rem;">
-  <h1>{{ section.settings.heading | default: 'sections.hradpontun.title' | t }}</h1>
-  <p style="color:var(--rf-stal);max-width:60ch;margin-bottom:2rem;">{{ section.settings.subtext | default: 'sections.hradpontun.intro' | t }}</p>
+  <h1>{% if section.settings.heading != blank %}{{ section.settings.heading }}{% else %}{{ 'sections.hradpontun.title' | t }}{% endif %}</h1>
+  <p style="color:var(--rf-stal);max-width:60ch;margin-bottom:2rem;">{% if section.settings.subtext != blank %}{{ section.settings.subtext }}{% else %}{{ 'sections.hradpontun.intro' | t }}{% endif %}</p>
 
   <form id="rf-hradpontun-form" novalidate>
     <div class="rf-field" style="margin-bottom:1.25rem;">
