@@ -13,65 +13,208 @@
       "type": "hero-search",
       "settings": {
         "headline": "Raflagnaefni. Fljót afhending.",
-        "subheading": "Yfir 15.000 vörur á lager. Sendum um allt land — eða sækja á staðnum í Þorlákshöfn virka daga 8–17.",
+        "subheading": "Sendum um allt land — eða sótt á staðnum í Þorlákshöfn virka daga 8–17.",
         "search_placeholder": "Leita að vöru, vörunúmeri eða framleiðanda...",
         "quick_links": "Hraðpöntun|/pages/hradpontun, Ljós|/collections/ljos, Rofar|/collections/rofar",
         "cta1_text": "Skoða vöruúrval",
-        "cta2_text": "Innskráning fagaðila"
+        "cta1_url": "",
+        "cta2_text": "Innskráning fagaðila",
+        "cta2_url": ""
       }
     },
     "categories": {
       "type": "category-grid",
+      "blocks": {
+        "cat1": {
+          "type": "category",
+          "settings": {
+            "label": "Ljós og perur",
+            "url": "/collections/ljos-og-perur",
+            "icon": "bulb",
+            "highlight": false
+          }
+        },
+        "cat2": {
+          "type": "category",
+          "settings": {
+            "label": "Lampar og ljósabúnaður",
+            "url": "/collections/lampar",
+            "icon": "lamp",
+            "highlight": false
+          }
+        },
+        "cat3": {
+          "type": "category",
+          "settings": {
+            "label": "Rofar og tenglar",
+            "url": "/collections/rofar-og-tenglar",
+            "icon": "switch",
+            "highlight": false
+          }
+        },
+        "cat4": {
+          "type": "category",
+          "settings": {
+            "label": "Raflagnaefni",
+            "url": "/collections/raflagnaefni",
+            "icon": "bolt",
+            "highlight": false
+          }
+        },
+        "cat5": {
+          "type": "category",
+          "settings": {
+            "label": "Töflubúnaður og varnir",
+            "url": "/collections/toflubunadur",
+            "icon": "panel",
+            "highlight": false
+          }
+        },
+        "cat6": {
+          "type": "category",
+          "settings": {
+            "label": "Kaplar og vír",
+            "url": "/collections/kaplar-og-vir",
+            "icon": "cable",
+            "highlight": false
+          }
+        },
+        "cat7": {
+          "type": "category",
+          "settings": {
+            "label": "Iðnstýringar og sjálfvirkni",
+            "url": "/collections/idnstyringar",
+            "icon": "gear",
+            "highlight": false
+          }
+        },
+        "cat8": {
+          "type": "category",
+          "settings": {
+            "label": "Hleðslustöðvar og rafbílar",
+            "url": "/collections/hledslustodvar",
+            "icon": "charger",
+            "highlight": false
+          }
+        },
+        "cat9": {
+          "type": "category",
+          "settings": {
+            "label": "Sólarorka og rafgeymar",
+            "url": "/collections/solarorka",
+            "icon": "solar",
+            "highlight": false
+          }
+        },
+        "cat10": {
+          "type": "category",
+          "settings": {
+            "label": "Loftræsting og hiti",
+            "url": "/collections/loftraesting",
+            "icon": "ventilation",
+            "highlight": false
+          }
+        },
+        "cat11": {
+          "type": "category",
+          "settings": {
+            "label": "Verkfæri og mælitæki",
+            "url": "/collections/verkfaeri",
+            "icon": "tool",
+            "highlight": false
+          }
+        },
+        "cat12": {
+          "type": "category",
+          "settings": {
+            "label": "Útsala",
+            "url": "/collections/utsala",
+            "icon": "tag",
+            "highlight": true
+          }
+        }
+      },
+      "block_order": [
+        "cat1",
+        "cat2",
+        "cat3",
+        "cat4",
+        "cat5",
+        "cat6",
+        "cat7",
+        "cat8",
+        "cat9",
+        "cat10",
+        "cat11",
+        "cat12"
+      ],
       "settings": {
         "heading": "Vöruflokkar"
-      },
-      "blocks": {
-        "cat1":  { "type": "category", "settings": { "label": "Ljós og perur",              "url": "/collections/ljos-og-perur",   "icon": "bulb"        } },
-        "cat2":  { "type": "category", "settings": { "label": "Lampar og ljósabúnaður",      "url": "/collections/lampar",           "icon": "lamp"        } },
-        "cat3":  { "type": "category", "settings": { "label": "Rofar og tenglar",            "url": "/collections/rofar-og-tenglar", "icon": "switch"      } },
-        "cat4":  { "type": "category", "settings": { "label": "Raflagnaefni",                "url": "/collections/raflagnaefni",     "icon": "bolt"        } },
-        "cat5":  { "type": "category", "settings": { "label": "Töflubúnaður og varnir",      "url": "/collections/toflubunadur",     "icon": "panel"       } },
-        "cat6":  { "type": "category", "settings": { "label": "Kaplar og vír",               "url": "/collections/kaplar-og-vir",   "icon": "cable"       } },
-        "cat7":  { "type": "category", "settings": { "label": "Iðnstýringar og sjálfvirkni", "url": "/collections/idnstyringar",     "icon": "gear"        } },
-        "cat8":  { "type": "category", "settings": { "label": "Hleðslustöðvar og rafbílar",  "url": "/collections/hledslustodvar",   "icon": "charger"     } },
-        "cat9":  { "type": "category", "settings": { "label": "Sólarorka og rafgeymar",      "url": "/collections/solarorka",        "icon": "solar"       } },
-        "cat10": { "type": "category", "settings": { "label": "Loftræsting og hiti",         "url": "/collections/loftraesting",     "icon": "ventilation" } },
-        "cat11": { "type": "category", "settings": { "label": "Verkfæri og mælitæki",        "url": "/collections/verkfaeri",        "icon": "tool"        } },
-        "cat12": { "type": "category", "settings": { "label": "Útsala",                      "url": "/collections/utsala",           "icon": "tag",        "highlight": true } }
-      },
-      "block_order": ["cat1","cat2","cat3","cat4","cat5","cat6","cat7","cat8","cat9","cat10","cat11","cat12"]
+      }
     },
     "audience": {
       "type": "audience-panels",
       "settings": {
-        "heading": "Tvær leiðir að versla"
+        "heading": "Tvær leiðir að versla",
+        "trade_title": "Fyrir fagaðila",
+        "trade_desc": "Nettóverð, hraðpöntun með vörunúmerum og reikningsviðskipti.",
+        "trade_cta": "Stofna fagreikning",
+        "trade_url": "",
+        "consumer_title": "Fyrir heimili",
+        "consumer_desc": "Skýrar lýsingar, verð með vsk og sending heim að dyrum.",
+        "consumer_cta": "Skoða vörur",
+        "consumer_url": ""
       }
     },
     "featured": {
       "type": "featured-products",
       "settings": {
         "heading": "Vinsælar vörur",
+        "collection": "",
         "products_to_show": 8
       }
     },
     "delivery": {
       "type": "delivery-info",
       "settings": {
-        "heading": "Afhendingarleiðir"
+        "heading": "Afhendingarleiðir",
+        "pickup_title": "Sækja á staðnum",
+        "pickup_desc": "Í Þorlákshöfn. Opið mán–fös 08:00–17:00.",
+        "shipping_title": "Sending um allt land",
+        "shipping_desc": "Við sendum með Pósturinn og einkaflutningum. Afhending 1–3 virka daga.",
+        "routes_title": "Fastar ferðir",
+        "routes_desc": "Reglulegar ferðir á Selfoss og í Holtagarða í Reykjavík."
       }
     },
     "brands": {
       "type": "brand-strip",
       "settings": {
-        "heading": "Vörumerki sem við bjóðum upp á"
+        "heading": "Vörumerki sem við bjóðum upp á",
+        "link_1": "",
+        "link_2": "",
+        "link_3": "",
+        "link_4": "",
+        "link_5": "",
+        "link_6": "",
+        "link_7": "",
+        "link_8": ""
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "heading": "Fáðu tilboð og nýjungar í póstinn"
+        "heading": "Fáðu tilboð og nýjungar í póstinn",
+        "subtext": ""
       }
     }
   },
-  "order": ["hero", "categories", "audience", "featured", "delivery", "brands", "newsletter"]
+  "order": [
+    "hero",
+    "categories",
+    "audience",
+    "featured",
+    "delivery",
+    "brands",
+    "newsletter"
+  ]
 }
