@@ -140,17 +140,25 @@ const themeFiles = tracked
 console.log(`▸ main branch: ${allFiles.length} files`);
 console.log(`▸ shopify branch: ${themeFiles.length} theme files (root-level)`);
 
-// ── 7. Push main branch ───────────────────────────────────────────────────────
+// ── 7. Resolve commit message from local git history ─────────────────────────
+let latestMessage;
+try {
+  latestMessage = execSync("git log -1 --pretty=%B", { cwd: ROOT }).toString().trim();
+} catch {
+  latestMessage = "Rafríkið theme — push from Replit";
+}
+
+// ── 8. Push main branch ───────────────────────────────────────────────────────
 console.log("\n── main branch ──────────────────────────────────────────────────");
 const mainBlobs = await createBlobs(allFiles);
 console.log(`▸ Blobs: ${mainBlobs.length}`);
-await commitToBranch("main", mainBlobs, "chore: sync from Replit");
+await commitToBranch("main", mainBlobs, latestMessage);
 
-// ── 8. Push shopify branch ────────────────────────────────────────────────────
+// ── 9. Push shopify branch ────────────────────────────────────────────────────
 console.log("\n── shopify branch (Shopify import target) ───────────────────────");
 const shopifyBlobs = await createBlobs(themeFiles);
 console.log(`▸ Blobs: ${shopifyBlobs.length}`);
-await commitToBranch("shopify", shopifyBlobs, "chore: sync theme from Replit");
+await commitToBranch("shopify", shopifyBlobs, latestMessage);
 
 console.log(`\n✓ Done!`);
 console.log(`  main    → https://github.com/${owner}/${REPO}/tree/main`);
