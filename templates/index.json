@@ -156,6 +156,7 @@
     },
     "featured": {
       "type": "featured-products",
+      "disabled": true,
       "settings": {
         "heading": "Vinsælar vörur",
         "collection": "",
@@ -169,7 +170,7 @@
         "pickup_title": "Sækja á staðnum",
         "pickup_desc": "Í Þorlákshöfn. Opið mán–fös 08:00–17:00.",
         "shipping_title": "Sending um allt land",
-        "shipping_desc": "Við sendum með Pósturinn og einkaflutningum. Afhending 1–3 virka daga.",
+        "shipping_desc": "Við sendum með Pósturinn og Dopp. Afhending 1–3 virka daga.",
         "routes_title": "Fastar ferðir",
         "routes_desc": "Reglulegar ferðir á Selfoss og í Holtagarða í Reykjavík."
       }
