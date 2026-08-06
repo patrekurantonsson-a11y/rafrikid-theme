@@ -1,10 +1,8 @@
-{% comment %}
-  sections/header.liquid — Sticky header with utility bar, logo, search, VAT toggle, nav, and mobile menu.
-{% endcomment %}
+{% comment %}sections/header.liquid{% endcomment %}
 
 <div class="rf-header-wrapper" role="banner">
 
-  {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+  {%- if section.settings.announcement_text != blank -%}
     <div class="rf-announcement" role="region" aria-label="Tilkynning">
       {{ section.settings.announcement_text }}
       <button data-dismiss-announcement aria-label="{{ 'accessibility.close' | t }}" style="background:none;border:none;color:inherit;cursor:pointer;margin-left:.75rem;font-size:1rem;">×</button>
@@ -50,18 +48,12 @@
     <div class="rf-container rf-header__inner">
 
       {%- comment -%} Logo {%- endcomment -%}
-      <a href="{{ routes.root_url }}" class="rf-logo" aria-label="{{ shop.name }} — forsíða">
-        {%- if section.settings.logo != blank -%}
-          <img class="rf-logo__mark" src="{{ section.settings.logo | image_url: width: 320 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo_width }}" height="auto" loading="eager">
-          <span class="rf-logo__wordmark">{{ section.settings.logo_text | default: shop.name }}</span>
-        {%- else -%}
-          {%- comment -%} Default SVG mark — replace with uploaded logo image in theme editor {%- endcomment -%}
-          <svg class="rf-logo__mark" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="34" height="34" rx="8" fill="#1A5C96"/>
-            <path d="M21 4L11 19h7L14 30l13-16h-7z" fill="white"/>
-          </svg>
-          <span class="rf-logo__wordmark">{{ section.settings.logo_text | default: shop.name }}</span>
-        {%- endif -%}
+      <a href="{{ routes.root_url }}" class="rf-logo" aria-label="{{ shop.name }}">
+        <svg class="rf-logo__mark" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="34" height="34" rx="8" fill="#1A5C96"/>
+          <path d="M21 4L11 19h7L14 30l13-16h-7z" fill="white"/>
+        </svg>
+        <span class="rf-logo__wordmark">{% if section.settings.logo_text != blank %}{{ section.settings.logo_text }}{% else %}{{ shop.name }}{% endif %}</span>
       </a>
 
       {%- comment -%} Search {%- endcomment -%}
@@ -162,25 +154,10 @@
   "name": "Haus",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Logo"
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "min": 80,
-      "max": 280,
-      "step": 8,
-      "unit": "px",
-      "label": "Logo breidd",
-      "default": 160
-    },
-    {
       "type": "text",
       "id": "logo_text",
-      "label": "Logo texti (ef engin mynd)",
-      "default": "Rafríkið"
+      "label": "Logo texti",
+      "default": "Rafrikid"
     },
     {
       "type": "link_list",
@@ -191,14 +168,8 @@
     {
       "type": "text",
       "id": "phone_number",
-      "label": "Símanúmer",
+      "label": "Simi",
       "default": "422 0000"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_announcement",
-      "label": "Sýna tilkynningu",
-      "default": false
     },
     {
       "type": "text",
