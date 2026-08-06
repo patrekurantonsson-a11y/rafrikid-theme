@@ -3,6 +3,9 @@
  * Design tokens, typography, layout, and shared utilities.
  */
 
+/* Ensure [hidden] always wins over display rules set by component CSS */
+[hidden] { display: none !important; }
+
 /* ============================================================
    1. CSS Custom Properties (Design Tokens)
    ============================================================ */
