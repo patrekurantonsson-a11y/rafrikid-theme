@@ -98,12 +98,6 @@
         "content": "Haus"
       },
       {
-        "type": "text",
-        "id": "logo_text",
-        "label": "Logo text",
-        "default": "Rafríkið"
-      },
-      {
         "type": "image_picker",
         "id": "logo",
         "label": "Logo mynd"
@@ -117,18 +111,6 @@
         "unit": "px",
         "label": "Logo breidd",
         "default": 160
-      },
-      {
-        "type": "text",
-        "id": "phone_number",
-        "label": "Símanúmer",
-        "default": "422 0000"
-      },
-      {
-        "type": "text",
-        "id": "announcement_text",
-        "label": "Tilkynning efst á síðu",
-        "default": ""
       }
     ]
   },
@@ -159,8 +141,14 @@
         "id": "cart_type",
         "label": "Tegund körfu",
         "options": [
-          { "value": "drawer", "label": "Skúffa" },
-          { "value": "page", "label": "Síða" }
+          {
+            "value": "drawer",
+            "label": "Skúffa"
+          },
+          {
+            "value": "page",
+            "label": "Síða"
+          }
         ],
         "default": "drawer"
       }
