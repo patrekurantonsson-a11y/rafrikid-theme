@@ -29,10 +29,9 @@ export function Footer() {
             <div className="rf-footer-col__heading">Hafa samband</div>
             <p style={{ margin: 0, fontSize: '0.875rem', color: 'rgba(255,255,255,0.65)' }}>
               Rafríkið ehf.<br/>
-              Raftækjavegur 12<br/>
-              105 Reykjavík<br/><br/>
-              Sími: 555-1234<br/>
-              rafrikid@rafrikid.is
+              Þorlákshöfn<br/><br/>
+              Sími: <a href="tel:4220000" style={{ color: 'rgba(255,255,255,0.85)' }}>422 0000</a><br/>
+              <a href="mailto:rafrikid@rafrikid.is" style={{ color: 'rgba(255,255,255,0.85)' }}>rafrikid@rafrikid.is</a>
             </p>
           </div>
         </div>

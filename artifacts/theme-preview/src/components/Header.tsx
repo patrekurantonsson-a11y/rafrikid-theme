@@ -41,7 +41,7 @@ export function Header() {
             </div>
           </div>
           
-          <div className="rf-utility-bar__phone">SÍMI: 555-1234</div>
+          <a href="tel:4220000" className="rf-utility-bar__phone" style={{ color: 'rgba(255,255,255,0.7)' }}>SÍMI: 422 0000</a>
         </div>
       </div>
 
