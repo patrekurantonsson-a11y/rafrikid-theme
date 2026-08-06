@@ -26,7 +26,7 @@
         "cat7":  { "type": "category", "settings": { "label": "Iðnstýringar og sjálfvirkni", "url": "/collections/idnstyringar",     "icon": "gear"        } },
         "cat8":  { "type": "category", "settings": { "label": "Hleðslustöðvar og rafbílar",  "url": "/collections/hledslustodvar",   "icon": "charger"     } },
         "cat9":  { "type": "category", "settings": { "label": "Sólarorka og rafgeymar",      "url": "/collections/solarorka",        "icon": "solar"       } },
-        "cat10": { "type": "category", "settings": { "label": "Loftræsting og hiti",         "url": "/collections/loftrae-sting",    "icon": "ventilation" } },
+        "cat10": { "type": "category", "settings": { "label": "Loftræsting og hiti",         "url": "/collections/loftraesting",     "icon": "ventilation" } },
         "cat11": { "type": "category", "settings": { "label": "Verkfæri og mælitæki",        "url": "/collections/verkfaeri",        "icon": "tool"        } },
         "cat12": { "type": "category", "settings": { "label": "Útsala",                      "url": "/collections/utsala",           "icon": "tag",        "highlight": true } }
       },
