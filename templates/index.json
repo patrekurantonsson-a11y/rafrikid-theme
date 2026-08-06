@@ -30,7 +30,7 @@
         "cat11": { "type": "category", "settings": { "label": "Verkfæri og mælitæki",        "url": "/collections/verkfaeri",        "icon": "tool"        } },
         "cat12": { "type": "category", "settings": { "label": "Útsala",                      "url": "/collections/utsala",           "icon": "tag",        "highlight": true } }
       },
-      "blocks_order": ["cat1","cat2","cat3","cat4","cat5","cat6","cat7","cat8","cat9","cat10","cat11","cat12"]
+      "block_order": ["cat1","cat2","cat3","cat4","cat5","cat6","cat7","cat8","cat9","cat10","cat11","cat12"]
     },
     "audience": {
       "type": "audience-panels",
