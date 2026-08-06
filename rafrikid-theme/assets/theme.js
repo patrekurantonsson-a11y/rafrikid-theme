@@ -583,13 +583,17 @@ class HradPontun {
 
       if (!products.length) { setErr('Fannst ekki'); return; }
 
-      // Fetch all product variant data in parallel
+      // Fetch all product variant data in parallel.
+      // Build the URL from the handle to avoid query-param corruption
+      // (p.url can contain ?ref=... so appending .js would break it).
       const pDataList = await Promise.all(
-        products.map(p =>
-          fetch(`${p.url}.js`)
+        products.map(p => {
+          const handle = p.handle || p.url.split('/products/')[1]?.split('?')[0];
+          if (!handle) return Promise.resolve(null);
+          return fetch(`/products/${handle}.js`)
             .then(r => r.ok ? r.json() : null)
-            .catch(() => null)
-        )
+            .catch(() => null);
+        })
       );
 
       // 1st priority: variant whose SKU or barcode exactly matches the code
