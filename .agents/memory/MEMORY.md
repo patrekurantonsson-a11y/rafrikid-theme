@@ -1,0 +1,1 @@
+- [GitHub push via connector](github-push.md) — gitPush callback needs source-control credential; use scripts/github-push.mjs + connectors SDK instead
