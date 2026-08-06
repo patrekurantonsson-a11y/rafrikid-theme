@@ -17,7 +17,7 @@
         "search_placeholder": "Leita að vöru, vörunúmeri eða framleiðanda...",
         "quick_links": "Hraðpöntun|/pages/hradpontun, Ljós|/collections/ljos, Rofar|/collections/rofar",
         "cta1_text": "Skoða vöruúrval",
-        "cta1_url": "",
+        "cta1_url": "shopify://collections/all",
         "cta2_text": "Innskráning fagaðila",
         "cta2_url": ""
       }
