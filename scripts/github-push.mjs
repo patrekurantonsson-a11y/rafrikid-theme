@@ -130,8 +130,10 @@ const tracked = execSync("git ls-files", { cwd: ROOT })
 const allFiles = tracked.map(p => ({ repoPath: p, fsPath: resolve(ROOT, p) }));
 
 // Only theme files → shopify branch, with rafrikid-theme/ prefix stripped
+const THEME_DIRS = ["assets", "config", "layout", "locales", "sections", "snippets", "templates"];
 const themeFiles = tracked
   .filter(p => p.startsWith(THEME_DIR + "/"))
+  .filter(p => THEME_DIRS.includes(p.slice(THEME_DIR.length + 1).split("/")[0]))
   .map(p => ({
     repoPath: p.slice(THEME_DIR.length + 1), // strip "rafrikid-theme/"
     fsPath:   resolve(ROOT, p)

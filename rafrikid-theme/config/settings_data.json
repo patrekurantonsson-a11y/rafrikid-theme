@@ -9,6 +9,7 @@
     "logo_width": 160,
     "footer_business_line": "Rafríkið ehf. · Þorlákshöfn",
     "cart_type": "drawer",
+    "content_for_index": [],
     "sections": {
       "header": {
         "type": "header",

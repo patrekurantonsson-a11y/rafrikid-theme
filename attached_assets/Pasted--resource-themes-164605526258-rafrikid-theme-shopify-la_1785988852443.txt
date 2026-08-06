@@ -1,0 +1,161 @@
+[{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/layout/theme.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "MissingTemplate",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/missing-template",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 8,
+	"message": "'sections/header.liquid' does not exist",
+	"source": "theme-check",
+	"startLineNumber": 85,
+	"startColumn": 15,
+	"endLineNumber": 85,
+	"endColumn": 23,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/layout/theme.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "RemoteAsset",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/remote-asset",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Asset should be served by the Shopify CDN for better performance.",
+	"source": "theme-check",
+	"startLineNumber": 31,
+	"startColumn": 26,
+	"endLineNumber": 31,
+	"endColumn": 61,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/layout/theme.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "RemoteAsset",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/remote-asset",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Asset should be served by the Shopify CDN for better performance.",
+	"source": "theme-check",
+	"startLineNumber": 32,
+	"startColumn": 26,
+	"endLineNumber": 32,
+	"endColumn": 58,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/layout/theme.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "RemoteAsset",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/remote-asset",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Asset should be served by the Shopify CDN for better performance.",
+	"source": "theme-check",
+	"startLineNumber": 33,
+	"startColumn": 9,
+	"endLineNumber": 33,
+	"endColumn": 152,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/sections/page-hradpontun.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "ParserBlockingScript",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/parser-blocking-javascript",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 8,
+	"message": "Avoid parser blocking scripts by adding `defer` or `async` on this tag",
+	"source": "theme-check",
+	"startLineNumber": 61,
+	"startColumn": 1,
+	"endLineNumber": 61,
+	"endColumn": 90,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/sections/page-hradpontun.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "RemoteAsset",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/remote-asset",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Asset should be served by the Shopify CDN for better performance.",
+	"source": "theme-check",
+	"startLineNumber": 61,
+	"startColumn": 9,
+	"endLineNumber": 61,
+	"endColumn": 80,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/sections/main-page.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "HardcodedRoutes",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/hardcoded-routes",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Use routes object {{ routes.root_url }} instead of hardcoding /",
+	"source": "theme-check",
+	"startLineNumber": 4,
+	"startColumn": 14,
+	"endLineNumber": 4,
+	"endColumn": 15,
+	"origin": "extHost1"
+},{
+	"resource": "/themes/164605526258/rafrikid-theme⁄shopify/sections/main-product.liquid",
+	"owner": "_generated_diagnostic_collection_name_#0",
+	"code": {
+		"value": "HardcodedRoutes",
+		"target": {
+			"$mid": 1,
+			"path": "/docs/storefronts/themes/tools/theme-check/checks/hardcoded-routes",
+			"scheme": "https",
+			"authority": "shopify.dev"
+		}
+	},
+	"severity": 4,
+	"message": "Use routes object {{ routes.root_url }} instead of hardcoding /",
+	"source": "theme-check",
+	"startLineNumber": 31,
+	"startColumn": 14,
+	"endLineNumber": 31,
+	"endColumn": 15,
+	"origin": "extHost1"
+}]
