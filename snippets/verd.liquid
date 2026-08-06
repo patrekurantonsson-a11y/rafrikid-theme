@@ -60,8 +60,8 @@
     <span class="rf-price__primary" data-price-mode="med" aria-label="{{ fagverd_med | money_without_trailing_zeros }} með virðisaukaskatti">
       {{- fagverd_med | money_without_trailing_zeros -}}
     </span>
-    <span class="rf-price__secondary" data-price-mode="ant" aria-label="{{ fagverd_ant_raw | times: 100 | money_without_trailing_zeros }} án virðisaukaskatts">
-      {{- fagverd_ant_raw | times: 100 | money_without_trailing_zeros }} {{ 'vat.without_vat_short' | t -}}
+    <span class="rf-price__secondary" data-price-mode="ant" aria-label="{{ fagverd_ant_raw | money_without_trailing_zeros }} án virðisaukaskatts">
+      {{- fagverd_ant_raw | money_without_trailing_zeros }} {{ 'vat.without_vat_short' | t -}}
     </span>
     <span class="rf-price__fagverd-badge">{{ 'products.product.fagverd_badge' | t }}</span>
 
@@ -70,8 +70,8 @@
     <span class="rf-price__primary" data-price-mode="med" aria-label="{{ price_med_vsk | money_without_trailing_zeros }} með virðisaukaskatti">
       {{- price_med_vsk | money_without_trailing_zeros -}}
     </span>
-    <span class="rf-price__secondary" data-price-mode="ant" aria-label="{{ price_ant_vsk_raw | times: 100 | money_without_trailing_zeros }} án virðisaukaskatts">
-      {{- price_ant_vsk_raw | times: 100 | money_without_trailing_zeros }} {{ 'vat.without_vat_short' | t -}}
+    <span class="rf-price__secondary" data-price-mode="ant" aria-label="{{ price_ant_vsk_raw | money_without_trailing_zeros }} án virðisaukaskatts">
+      {{- price_ant_vsk_raw | money_without_trailing_zeros }} {{ 'vat.without_vat_short' | t -}}
     </span>
 
     {%- if on_sale -%}
