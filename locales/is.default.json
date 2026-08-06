@@ -19,7 +19,8 @@
   "pagination": {
     "label": "Blaðsíðuval",
     "previous": "Fyrri",
-    "next": "Næsta"
+    "next": "Næsta",
+    "page": "Síða {{number}}"
   },
   "search": {
     "title": "Leit",
