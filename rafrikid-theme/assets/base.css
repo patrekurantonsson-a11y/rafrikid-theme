@@ -1625,3 +1625,81 @@ html.vat-ant .rf-price [data-price-mode="med"] {
   .rf-cart-drawer,
   .rf-cart-drawer__overlay { display: none; }
 }
+
+/* ── Shopify cookie/privacy banner — brand styling ─────────────────────── */
+#shopify-pc__banner {
+  font-family: 'Public Sans', system-ui, sans-serif !important;
+}
+#shopify-pc__banner .shopify-pc__banner__dialog {
+  background: var(--rf-panel) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  border: none !important;
+  border-top: 3px solid var(--rf-kopar) !important;
+  box-shadow: 0 -8px 32px rgba(27, 42, 68, 0.35) !important;
+  border-radius: 0 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+#shopify-pc__banner .shopify-pc__banner__dialog h2 {
+  font-family: 'Archivo', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  font-size: 1.05rem !important;
+  letter-spacing: -0.01em !important;
+}
+#shopify-pc__banner .shopify-pc__banner__dialog p {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.55 !important;
+}
+#shopify-pc__banner .shopify-pc__banner__dialog a {
+  color: #7FB3DC !important;
+  text-decoration: underline !important;
+}
+#shopify-pc__banner button {
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  padding: 0.6rem 1.25rem !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
+  cursor: pointer !important;
+}
+/* Accept — primary steel blue */
+#shopify-pc__banner .shopify-pc__banner__btn-accept {
+  background: var(--rf-kopar) !important;
+  border: 1px solid var(--rf-kopar) !important;
+  color: #fff !important;
+}
+#shopify-pc__banner .shopify-pc__banner__btn-accept:hover {
+  background: #17517f !important;
+}
+/* Decline + manage prefs — ghost buttons */
+#shopify-pc__banner .shopify-pc__banner__btn-decline,
+#shopify-pc__banner .shopify-pc__banner__btn-manage-prefs {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+#shopify-pc__banner .shopify-pc__banner__btn-decline:hover,
+#shopify-pc__banner .shopify-pc__banner__btn-manage-prefs:hover {
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  color: #fff !important;
+}
+/* Preferences dialog — match brand */
+#shopify-pc__prefs__dialog {
+  font-family: 'Public Sans', system-ui, sans-serif !important;
+  border-radius: 10px !important;
+}
+#shopify-pc__prefs__dialog h2,
+#shopify-pc__prefs__dialog h3 {
+  font-family: 'Archivo', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  color: var(--rf-panel) !important;
+}
+#shopify-pc__prefs__dialog button[id^='shopify-pc__prefs__header-accept'],
+#shopify-pc__prefs__dialog .shopify-pc__prefs__header-actions button:first-child {
+  background: var(--rf-kopar) !important;
+  border-color: var(--rf-kopar) !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+}
