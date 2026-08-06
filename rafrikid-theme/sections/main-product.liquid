@@ -1,0 +1,325 @@
+{% comment %}sections/main-product.liquid — Full product page{% endcomment %}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign box_qty = product.metafields.custom.kassi | plus: 0 -%}
+
+{% comment %} JSON-LD structured data {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  "sku": {{ current_variant.sku | json }},
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "ISK",
+    "price": {{ current_variant.price | divided_by: 100.0 | json }},
+    "availability": "{% if current_variant.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "url": {{ request.origin | append: product.url | json }}
+  }
+  {% if product.images.size > 0 %}
+  ,"image": {{ product.featured_image | image_url: width: 1200 | json }}
+  {% endif %}
+}
+</script>
+
+<div class="rf-container" style="padding-top:2rem;">
+  {% comment %} Breadcrumbs {% endcomment %}
+  <nav class="rf-breadcrumbs" aria-label="Brauðmylsna">
+    <a href="/">Forsíða</a>
+    <span class="rf-breadcrumbs__sep" aria-hidden="true">›</span>
+    {%- if collection -%}
+      <a href="{{ collection.url }}">{{ collection.title }}</a>
+      <span class="rf-breadcrumbs__sep" aria-hidden="true">›</span>
+    {%- endif -%}
+    <span aria-current="page">{{ product.title | escape }}</span>
+  </nav>
+
+  <div class="rf-product-layout">
+    {% comment %} Gallery {% endcomment %}
+    <div class="rf-product-gallery">
+      <div class="rf-product-gallery__main">
+        {%- if product.featured_image -%}
+          <img
+            id="ProductMainImage"
+            src="{{ product.featured_image | image_url: width: 900 }}"
+            srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+            width="900" height="900"
+            loading="eager"
+          >
+        {%- else -%}
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--rf-stal);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if product.images.size > 1 -%}
+        <div class="rf-product-gallery__thumbs" role="list">
+          {%- for image in product.images -%}
+            <button
+              class="rf-product-gallery__thumb{% if forloop.first %} active{% endif %}"
+              data-src="{{ image | image_url: width: 900 }}"
+              data-srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w"
+              data-alt="{{ image.alt | default: product.title | escape }}"
+              aria-label="Mynd {{ forloop.index }}"
+              role="listitem"
+            >
+              <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | default: product.title | escape }}" width="68" height="68" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {% comment %} Buy box {% endcomment %}
+    <div class="rf-buy-box">
+      {%- if product.vendor != blank -%}
+        <div class="rf-buy-box__vendor">{{ product.vendor }}</div>
+      {%- endif -%}
+
+      <h1 class="rf-buy-box__title">{{ product.title | escape }}</h1>
+
+      {%- if product.metafields.custom.mpn != blank -%}
+        <div style="font-family:var(--font-data);font-size:.875rem;color:var(--rf-stal);">MPN: {{ product.metafields.custom.mpn }}</div>
+      {%- endif -%}
+
+      {%- unless product.description == blank -%}
+        <p class="rf-buy-box__short-desc">{{ product.description | strip_html | truncate: 240 }}</p>
+      {%- endunless -%}
+
+      <div>{% render 'stock-badge', variant: current_variant %}</div>
+
+      <div>
+        {% render 'verd', product: product, variant: current_variant, show_fagverd: true, size: 'large' %}
+      </div>
+
+      {% comment %} Variant selectors {% endcomment %}
+      {%- unless product.has_only_default_variant -%}
+        <div>
+          {%- for option in product.options_with_values -%}
+            <div class="rf-field">
+              <label class="rf-label" for="Option{{ forloop.index }}">{{ option.name }}</label>
+              <select id="Option{{ forloop.index }}" name="option{{ forloop.index }}" class="rf-select">
+                {%- for value in option.values -%}
+                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+
+      <form id="rf-product-form" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        <div class="rf-field">
+          <label class="rf-label" for="ProductQty">{{ 'cart.quantity' | t }}</label>
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+            <div class="rf-qty">
+              <button type="button" class="rf-qty__btn" data-delta="-1" aria-label="Minnka">−</button>
+              <input
+                class="rf-qty__input"
+                type="number"
+                id="ProductQty"
+                name="quantity"
+                value="{{ box_qty | default: 1 }}"
+                min="{{ box_qty | default: 1 }}"
+                step="{{ box_qty | default: 1 }}"
+                aria-label="{{ 'products.product.quantity.input_label' | t: product: product.title | escape }}"
+                {% if box_qty > 1 %}data-box-qty="{{ box_qty }}"{% endif %}
+              >
+              <button type="button" class="rf-qty__btn" data-delta="1" aria-label="Auka">+</button>
+            </div>
+            {%- if box_qty > 1 -%}
+              <span class="text-secondary" style="font-size:.875rem;">{{ 'products.product.box_qty_hint' | t: count: box_qty }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="rf-buy-box__actions">
+          <button
+            type="submit"
+            class="btn btn--primary btn--full"
+            data-add-to-cart
+            data-label="{{ 'products.product.add_to_cart' | t }}"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            {%- if current_variant.available -%}
+              {{ 'products.product.add_to_cart' | t }}
+            {%- else -%}
+              {{ 'products.product.out_of_stock' | t }}
+            {%- endif -%}
+          </button>
+
+          {%- if section.settings.show_quote_button -%}
+            <a href="{{ section.settings.quote_url | default: '/pages/hafa-samband' }}?product={{ product.handle }}" class="btn btn--secondary btn--full">
+              {{ 'products.product.request_quote' | t }}
+            </a>
+          {%- endif -%}
+        </div>
+      </form>
+
+      {%- if product.metafields.custom.afhendingartimi != blank -%}
+        <p class="rf-lead-time">
+          {{ 'products.product.lead_time' | t }}: <strong>{{ product.metafields.custom.afhendingartimi }}</strong>
+        </p>
+      {%- endif -%}
+
+      {% comment %} Share {% endcomment %}
+      <div style="padding-top:.5rem;border-top:1px solid var(--color-border);font-size:.8125rem;color:var(--rf-stal);">
+        {{ 'products.product.sku' | t }}: <span class="rf-mono">{{ current_variant.sku | default: '—' }}</span>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Technical data {% endcomment %}
+  <div style="margin-top:3rem;">
+    <details open>
+      <summary style="font-size:1.1rem;font-weight:700;padding:.75rem 0;border-bottom:2px solid var(--color-border);">
+        {{ 'products.product.technical_data' | t }}
+      </summary>
+      <div style="padding-top:1rem;">
+        {%- liquid
+          assign has_tech_data = false
+          if product.metafields.custom.mpn != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.ean != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.pakkning != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.kassi != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.bretti != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.spenna != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.straumur != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.ip_flokkur != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.litarhitastig != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.ljosstreymi != blank
+            assign has_tech_data = true
+          endif
+          if product.metafields.custom.orkuflokkur != blank
+            assign has_tech_data = true
+          endif
+        -%}
+
+        {%- if has_tech_data -%}
+          <table class="rf-tech-table">
+            {%- if product.metafields.custom.mpn != blank -%}
+              <tr><th>Vörunúmer framleiðanda</th><td>{{ product.metafields.custom.mpn }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.ean != blank -%}
+              <tr><th>Strikamerki (EAN)</th><td>{{ product.metafields.custom.ean }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.pakkning != blank -%}
+              <tr><th>Pakkning</th><td>{{ product.metafields.custom.pakkning }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.kassi != blank -%}
+              <tr><th>Í kassa</th><td>{{ product.metafields.custom.kassi }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.bretti != blank -%}
+              <tr><th>Á bretti</th><td>{{ product.metafields.custom.bretti }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.spenna != blank -%}
+              <tr><th>Spenna</th><td>{{ product.metafields.custom.spenna }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.straumur != blank -%}
+              <tr><th>Straumur</th><td>{{ product.metafields.custom.straumur }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.ip_flokkur != blank -%}
+              <tr><th>IP-flokkur</th><td>{{ product.metafields.custom.ip_flokkur }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.litarhitastig != blank -%}
+              <tr><th>Litarhitastig</th><td>{{ product.metafields.custom.litarhitastig }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.ljosstreymi != blank -%}
+              <tr><th>Ljósstreymi</th><td>{{ product.metafields.custom.ljosstreymi }}</td></tr>
+            {%- endif -%}
+            {%- if product.metafields.custom.orkuflokkur != blank -%}
+              <tr><th>Orkuflokkur</th><td>{{ product.metafields.custom.orkuflokkur }}</td></tr>
+            {%- endif -%}
+          </table>
+        {%- else -%}
+          <p class="text-secondary" style="font-size:.875rem;">Engar tæknilegar upplýsingar skráðar.</p>
+        {%- endif -%}
+      </div>
+    </details>
+
+    {% comment %} Description {% endcomment %}
+    {%- unless product.description == blank -%}
+      <details style="margin-top:1.5rem;">
+        <summary style="font-size:1.1rem;font-weight:700;padding:.75rem 0;border-bottom:2px solid var(--color-border);">
+          {{ 'products.product.description' | t }}
+        </summary>
+        <div class="rf-product-description" style="padding-top:1.5rem;line-height:1.8;max-width:72ch;">
+          {{ product.description }}
+        </div>
+      </details>
+    {%- endunless -%}
+
+    {% comment %} Documents {% endcomment %}
+    {%- if product.metafields.custom.skjol != blank -%}
+      <details style="margin-top:1.5rem;">
+        <summary style="font-size:1.1rem;font-weight:700;padding:.75rem 0;border-bottom:2px solid var(--color-border);">
+          {{ 'products.product.documents' | t }}
+        </summary>
+        <div style="padding-top:1rem;">
+          {{ product.metafields.custom.skjol }}
+        </div>
+      </details>
+    {%- endif -%}
+  </div>
+
+  {% comment %} Related products {% endcomment %}
+  {%- if section.settings.show_related and collection != blank -%}
+    <div style="margin-top:4rem;">
+      <h2 style="margin-bottom:1.5rem;">{{ 'products.product.related_products' | t }}</h2>
+      <div class="rf-product-grid">
+        {%- assign related_count = 0 -%}
+        {%- for related in collection.products -%}
+          {%- unless related.id == product.id -%}
+            {%- if related_count < 4 -%}
+              {% render 'product-card', product: related, lazy: true %}
+              {%- assign related_count = related_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% comment %} Pass variants to JS {% endcomment %}
+<script>
+  window.productVariants = {{ product.variants | json }};
+</script>
+
+{% schema %}
+{
+  "name": "Vörusíða",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_quote_button", "label": "Sýna tilboðshnapp", "default": true },
+    { "type": "url", "id": "quote_url", "label": "Tilboðshlekkur" },
+    { "type": "checkbox", "id": "show_related", "label": "Sýna svipaðar vörur", "default": true }
+  ]
+}
+{% endschema %}

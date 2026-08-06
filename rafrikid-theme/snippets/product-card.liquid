@@ -1,0 +1,55 @@
+{% comment %}
+  product-card.liquid
+  Usage: {% render 'product-card', product: product, lazy: true %}
+{% endcomment %}
+
+{% liquid
+  assign card_product = product
+  assign loading = 'lazy'
+  if lazy == false
+    assign loading = 'eager'
+  endif
+  assign current_variant = card_product.selected_or_first_available_variant
+%}
+
+<article class="rf-card rf-product-card">
+  <a href="{{ card_product.url }}" class="rf-product-card__image-wrap" aria-label="{{ card_product.title | escape }}" tabindex="-1">
+    {%- if card_product.featured_image -%}
+      <img
+        src="{{ card_product.featured_image | image_url: width: 600 }}"
+        srcset="{{ card_product.featured_image | image_url: width: 300 }} 300w, {{ card_product.featured_image | image_url: width: 600 }} 600w, {{ card_product.featured_image | image_url: width: 900 }} 900w"
+        sizes="(min-width: 1280px) 280px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+        alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+        width="600"
+        height="600"
+        loading="{{ loading }}"
+      >
+    {%- else -%}
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--rf-stal);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      </div>
+    {%- endif -%}
+  </a>
+
+  <div class="rf-product-card__body">
+    {%- if card_product.vendor != blank -%}
+      <div class="rf-product-card__vendor">{{ card_product.vendor }}</div>
+    {%- endif -%}
+
+    <h3 class="rf-product-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    {%- if card_product.metafields.custom.mpn != blank -%}
+      <div class="rf-product-card__mpn rf-mono">{{ card_product.metafields.custom.mpn }}</div>
+    {%- endif -%}
+
+    <div class="rf-product-card__stock">
+      {% render 'stock-badge', variant: current_variant %}
+    </div>
+
+    <div class="rf-product-card__price" style="margin-top:.5rem;">
+      {% render 'verd', product: card_product, variant: current_variant %}
+    </div>
+  </div>
+</article>

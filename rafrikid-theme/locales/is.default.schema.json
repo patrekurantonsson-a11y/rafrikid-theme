@@ -1,0 +1,16 @@
+{
+  "general": {
+    "currency": {
+      "format": {
+        "label": "Gjaldmiðilssnið"
+      }
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": {
+        "label": "Valmynd"
+      }
+    }
+  }
+}

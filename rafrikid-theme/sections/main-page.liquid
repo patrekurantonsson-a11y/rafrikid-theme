@@ -1,0 +1,20 @@
+{% comment %}sections/main-page.liquid — Generic page template{% endcomment %}
+<div class="rf-container" style="padding-top:2.5rem;padding-bottom:5rem;max-width:820px;">
+  <nav class="rf-breadcrumbs" aria-label="Brauðmylsna">
+    <a href="/">Forsíða</a>
+    <span class="rf-breadcrumbs__sep" aria-hidden="true">›</span>
+    <span aria-current="page">{{ page.title | escape }}</span>
+  </nav>
+  <h1>{{ page.title | escape }}</h1>
+  <div class="rf-page-content" style="line-height:1.8;max-width:72ch;">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Síða",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

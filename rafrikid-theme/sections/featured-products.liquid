@@ -1,0 +1,43 @@
+{% comment %}sections/featured-products.liquid — Vinsælar vörur carousel{% endcomment %}
+<section class="rf-section rf-section--alt">
+  <div class="rf-container">
+    <div class="rf-section__heading" style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;">
+      <h2>{{ section.settings.heading | default: 'Vinsælar vörur' }}</h2>
+      {%- if section.settings.collection != blank -%}
+        <a href="{{ section.settings.collection.url }}" style="font-size:.9rem;white-space:nowrap;">{{ 'collection.filter_and_sort.results_count.other' | t: count: '' | strip }} →</a>
+      {%- endif -%}
+    </div>
+
+    <div class="rf-product-grid">
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product, lazy: true %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <div class="rf-card rf-product-card" style="min-height:280px;">
+            <div class="rf-product-card__image-wrap" style="background:var(--color-border);"></div>
+            <div class="rf-product-card__body">
+              <div style="height:.75rem;background:var(--color-border);border-radius:2px;margin-bottom:.5rem;width:40%;"></div>
+              <div style="height:1rem;background:var(--color-border);border-radius:2px;margin-bottom:.5rem;"></div>
+              <div style="height:.875rem;background:var(--color-border);border-radius:2px;width:60%;"></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vinsælar vörur",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Fyrirsögn", "default": "Vinsælar vörur" },
+    { "type": "collection", "id": "collection", "label": "Vöruflokkur" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 4, "label": "Fjöldi vara", "default": 8 }
+  ],
+  "presets": [{ "name": "Vinsælar vörur" }]
+}
+{% endschema %}

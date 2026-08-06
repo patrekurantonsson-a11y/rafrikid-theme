@@ -1,0 +1,47 @@
+{% comment %}sections/delivery-info.liquid — Afhending{% endcomment %}
+<section class="rf-section">
+  <div class="rf-container">
+    {%- if section.settings.heading != blank -%}
+      <div class="rf-section__heading" style="text-align:center;margin-bottom:2rem;">
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="rf-delivery-cols">
+      <div class="rf-delivery-col">
+        <svg class="rf-delivery-col__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <h3 style="font-size:1.1rem;margin-bottom:.5rem;">{{ section.settings.pickup_title | default: 'Sækja á staðnum' }}</h3>
+        <p style="font-size:.9rem;color:var(--rf-stal);margin:0;">{{ section.settings.pickup_desc | default: 'Í Þorlákshöfn. Opið mán–fös 08:00–17:00.' }}</p>
+      </div>
+
+      <div class="rf-delivery-col">
+        <svg class="rf-delivery-col__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3 style="font-size:1.1rem;margin-bottom:.5rem;">{{ section.settings.shipping_title | default: 'Sending um allt land' }}</h3>
+        <p style="font-size:.9rem;color:var(--rf-stal);margin:0;">{{ section.settings.shipping_desc | default: 'Við sendum með Pósturinn og einkaflutningum. Afhending 1–3 virka daga.' }}</p>
+      </div>
+
+      <div class="rf-delivery-col">
+        <svg class="rf-delivery-col__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+        <h3 style="font-size:1.1rem;margin-bottom:.5rem;">{{ section.settings.routes_title | default: 'Fastar ferðir' }}</h3>
+        <p style="font-size:.9rem;color:var(--rf-stal);margin:0;">{{ section.settings.routes_desc | default: 'Reglulegar ferðir á Selfoss og í Holtagarða í Reykjavík.' }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Afhending",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Fyrirsögn", "default": "Afhendingarleiðir" },
+    { "type": "text", "id": "pickup_title", "label": "Sækja á staðnum titill", "default": "Sækja á staðnum" },
+    { "type": "textarea", "id": "pickup_desc", "label": "Sækja á staðnum lýsing", "default": "Í Þorlákshöfn. Opið mán–fös 08:00–17:00." },
+    { "type": "text", "id": "shipping_title", "label": "Sending titill", "default": "Sending um allt land" },
+    { "type": "textarea", "id": "shipping_desc", "label": "Sending lýsing", "default": "Við sendum með Pósturinn og einkaflutningum. Afhending 1–3 virka daga." },
+    { "type": "text", "id": "routes_title", "label": "Ferðir titill", "default": "Fastar ferðir" },
+    { "type": "textarea", "id": "routes_desc", "label": "Ferðir lýsing", "default": "Reglulegar ferðir á Selfoss og í Holtagarða í Reykjavík." }
+  ],
+  "presets": [{ "name": "Afhending" }]
+}
+{% endschema %}

@@ -1,0 +1,79 @@
+{% comment %}sections/main-cart.liquid — Full cart page{% endcomment %}
+<div class="rf-container" style="padding-top:2rem;padding-bottom:5rem;max-width:900px;">
+  <h1>{{ 'cart.title' | t }}</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div style="text-align:center;padding:4rem 1rem;">
+      <p style="color:var(--rf-stal);font-size:1.1rem;">{{ 'cart.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary" style="margin-top:1rem;">{{ 'cart.continue_shopping' | t }}</a>
+    </div>
+  {%- else -%}
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start;">
+      <div>
+        {%- for item in cart.items -%}
+          <div style="display:flex;gap:1.25rem;padding:1.25rem 0;border-bottom:1px solid var(--color-border);">
+            <a href="{{ item.url }}" tabindex="-1">
+              <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" width="96" height="96" style="object-fit:contain;border:1.5px solid var(--color-border);border-radius:var(--border-radius);">
+            </a>
+            <div style="flex:1;min-width:0;">
+              <div style="font-weight:600;"><a href="{{ item.url }}">{{ item.product_title | escape }}</a></div>
+              {%- unless item.variant_title == 'Default Title' -%}
+                <div style="font-size:.8125rem;color:var(--rf-stal);">{{ item.variant_title }}</div>
+              {%- endunless -%}
+              {%- if item.sku != blank -%}
+                <div class="rf-mono" style="font-size:.75rem;color:var(--rf-stal);">{{ item.sku }}</div>
+              {%- endif -%}
+              <div style="margin-top:.75rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                <div class="rf-qty">
+                  <button type="button" class="rf-qty__btn" data-key="{{ item.key }}" data-delta="-1" aria-label="Minnka">−</button>
+                  <input class="rf-qty__input" type="number" value="{{ item.quantity }}" min="1" data-key="{{ item.key }}" aria-label="{{ 'cart.quantity' | t }}">
+                  <button type="button" class="rf-qty__btn" data-key="{{ item.key }}" data-delta="1" aria-label="Auka">+</button>
+                </div>
+                <button class="btn btn--secondary" style="padding:.2em .6em;font-size:.8125rem;" data-remove="{{ item.key }}">{{ 'cart.remove' | t }}</button>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-weight:700;font-size:1rem;">{{ item.line_price | money }}</div>
+              <div style="font-size:.8125rem;color:var(--rf-stal);">{{ item.line_price | divided_by: 1.24 | round | money }} {{ 'vat.without_vat_short' | t }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+
+        <div style="margin-top:1.5rem;">
+          <label class="rf-label" for="CartNote">{{ 'cart.order_note' | t }}</label>
+          <textarea id="CartNote" name="note" class="rf-textarea" rows="3" style="margin-top:.35rem;" placeholder="{{ 'cart.order_note_placeholder' | t }}">{{ cart.note }}</textarea>
+        </div>
+      </div>
+
+      <div style="position:sticky;top:6rem;background:#fff;border:1.5px solid var(--color-border);border-radius:var(--border-radius);padding:1.5rem;">
+        <h2 style="font-size:1rem;margin-bottom:1rem;">{{ 'cart.subtotal' | t }}</h2>
+        <div class="rf-cart-totals">
+          {%- assign excl_price = cart.total_price | divided_by: 1.24 | round -%}
+          <div class="rf-cart-totals__row">
+            <span>{{ 'cart.subtotal_excl' | t }}</span>
+            <span>{{ excl_price | money }}</span>
+          </div>
+          <div class="rf-cart-totals__row">
+            <span>{{ 'cart.vat' | t }}</span>
+            <span>{{ cart.total_price | minus: excl_price | money }}</span>
+          </div>
+          <div class="rf-cart-totals__row rf-cart-totals__row--total">
+            <span>{{ 'cart.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+        </div>
+        <p style="font-size:.8125rem;color:var(--rf-stal);margin:1rem 0;">{{ 'cart.shipping_note' | t }}</p>
+        <a href="{{ routes.checkout }}" class="btn btn--primary btn--full" style="margin-bottom:.5rem;">{{ 'cart.checkout' | t }}</a>
+        <a href="{{ routes.root_url }}" class="btn btn--secondary btn--full">{{ 'cart.continue_shopping' | t }}</a>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Karfa",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

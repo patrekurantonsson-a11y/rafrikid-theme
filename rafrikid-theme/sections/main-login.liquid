@@ -1,0 +1,37 @@
+{% comment %}sections/main-login.liquid{% endcomment %}
+<div class="rf-container" style="padding-top:3rem;padding-bottom:5rem;max-width:440px;">
+  <h1>{{ 'customers.login.title' | t }}</h1>
+
+  {%- if form.errors -%}
+    <div role="alert" style="background:#fdecea;border:1px solid #f5c2c7;padding:1rem;border-radius:var(--border-radius);margin-bottom:1.5rem;">
+      {%- for error in form.errors -%}
+        <p style="margin:0;">{{ form.errors.messages[error] }}</p>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {% form 'customer_login' %}
+    <div class="rf-field">
+      <label class="rf-label" for="CustomerEmail">{{ 'customers.login.email' | t }}</label>
+      <input type="email" id="CustomerEmail" name="customer[email]" class="rf-input" required autocomplete="email" autofocus>
+    </div>
+    <div class="rf-field">
+      <label class="rf-label" for="CustomerPassword">{{ 'customers.login.password' | t }}</label>
+      <input type="password" id="CustomerPassword" name="customer[password]" class="rf-input" required autocomplete="current-password">
+    </div>
+    <button type="submit" class="btn btn--primary btn--full" style="margin-bottom:.75rem;">{{ 'customers.login.sign_in' | t }}</button>
+  {% endform %}
+
+  <div style="display:flex;justify-content:space-between;font-size:.875rem;flex-wrap:wrap;gap:.5rem;">
+    <a href="{{ routes.account_recover_url }}">{{ 'customers.login.forgot_password' | t }}</a>
+    <a href="{{ routes.account_register_url }}">{{ 'customers.register.create_account' | t }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Innskráning",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

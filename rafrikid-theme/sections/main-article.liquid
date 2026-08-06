@@ -1,0 +1,23 @@
+{% comment %}sections/main-article.liquid{% endcomment %}
+<div class="rf-container" style="padding-top:2.5rem;padding-bottom:5rem;max-width:760px;">
+  <nav class="rf-breadcrumbs" aria-label="Brauðmylsna">
+    <a href="{{ blog.url }}">{{ blog.title }}</a>
+    <span class="rf-breadcrumbs__sep">›</span>
+    <span aria-current="page">{{ article.title | escape }}</span>
+  </nav>
+  <h1>{{ article.title | escape }}</h1>
+  <p class="text-secondary" style="font-size:.875rem;">{{ 'blogs.article.written_by' | t: author: article.author }} · {{ article.published_at | date: '%d. %B %Y' }}</p>
+  {%- if article.image -%}
+    <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.image.alt | escape }}" width="1200" height="630" style="width:100%;height:auto;border-radius:var(--border-radius);margin-bottom:2rem;" loading="eager">
+  {%- endif -%}
+  <div style="line-height:1.9;max-width:72ch;">{{ article.content }}</div>
+  <p style="margin-top:2rem;"><a href="{{ blog.url }}">← {{ 'blogs.article.back_to_blog' | t }}</a></p>
+</div>
+
+{% schema %}
+{
+  "name": "Grein",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

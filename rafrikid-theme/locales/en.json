@@ -1,0 +1,179 @@
+{
+  "general": {
+    "currency": {
+      "format": "{{amount}} ISK"
+    },
+    "password_page": {
+      "coming_soon": "Rafríkið — Coming soon"
+    }
+  },
+  "404": {
+    "title": "Page not found.",
+    "subtext": "Try searching or browse our product categories.",
+    "link": "Continue shopping"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search for a product, part number or barcode",
+    "results_with_count": {
+      "one": "{{count}} result",
+      "other": "{{count}} results"
+    },
+    "no_results": "No results for \"{{terms}}\". Try a part number or shorter query.",
+    "no_results_for": "No results",
+    "search": "Search"
+  },
+  "vat": {
+    "toggle_label": "Show price",
+    "with_vat": "Incl. VAT",
+    "without_vat": "Excl. VAT",
+    "with_vat_short": "incl.",
+    "without_vat_short": "excl."
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "added_to_cart": "Added",
+      "buy_it_now": "Buy now",
+      "from": "From",
+      "on_sale": "Sale",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": {
+        "label": "Quantity",
+        "input_label": "Quantity for {{product}}"
+      },
+      "description": "Description",
+      "more_information": "More information",
+      "request_quote": "Request a quote",
+      "share": "Share",
+      "sku": "SKU",
+      "vendor": "Brand",
+      "in_stock": "In stock",
+      "low_stock": "Only {{count}} left",
+      "incoming": "Incoming",
+      "out_of_stock": "Out of stock",
+      "available_to_order": "Available to order",
+      "lead_time": "Lead time",
+      "box_qty_hint": "Sold in boxes of {{count}} pcs.",
+      "technical_data": "Technical data",
+      "documents": "Documents & manuals",
+      "related_products": "Related products",
+      "errors": {
+        "max_qty": "Not available in that quantity. Max {{count}} pcs.",
+        "add_to_cart": "Could not add to cart. Try again or call us."
+      },
+      "fagverd_badge": "Trade price"
+    },
+    "general": {
+      "vendor": "Brand"
+    }
+  },
+  "collection": {
+    "title": "Products",
+    "filter_and_sort": {
+      "filter_button": "Filter",
+      "filters": "Filters",
+      "clear_all": "Clear filters",
+      "title": "Filter and sort",
+      "sort_by_label": "Sort by",
+      "sort_by": {
+        "title": "Sort by",
+        "manual": "Featured",
+        "best_selling": "Best selling",
+        "title_ascending": "Name A–Z",
+        "title_descending": "Name Z–A",
+        "price_ascending": "Price: low to high",
+        "price_descending": "Price: high to low",
+        "created_ascending": "Oldest",
+        "created_descending": "Newest"
+      },
+      "apply": "Apply",
+      "no_results": "No products found. Try removing filters or searching by part number.",
+      "grid_view": "Grid",
+      "list_view": "List",
+      "results_count": {
+        "one": "{{count}} product",
+        "other": "{{count}} products"
+      }
+    },
+    "facets": {
+      "brand": "Brand",
+      "price": "Price",
+      "availability": "Availability",
+      "in_stock": "In stock"
+    }
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "continue_shopping": "Continue shopping",
+    "subtotal": "Total",
+    "subtotal_excl": "Total excl. VAT",
+    "vat": "VAT (24%)",
+    "shipping_note": "Shipping calculated at checkout",
+    "free_shipping": "Free shipping over {{amount}}",
+    "remove": "Remove",
+    "quantity": "Qty",
+    "order_note": "Order note",
+    "checkout": "Checkout",
+    "view_cart": "View cart",
+    "update": "Update cart",
+    "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout"
+  },
+  "customers": {
+    "login": {
+      "title": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "sign_in": "Sign in",
+      "forgot_password": "Forgot your password?",
+      "no_account": "Don't have an account?",
+      "create_account": "Create account"
+    },
+    "logout": "Log out",
+    "register": {
+      "title": "Create account",
+      "tab_individual": "Individual",
+      "tab_company": "Company",
+      "email": "Email",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "password": "Password",
+      "company_name": "Company name",
+      "kennitala": "Kennitala (ID number)",
+      "vat_number": "VAT number",
+      "address": "Address",
+      "phone": "Phone",
+      "reference": "Reference / buyer",
+      "create_account": "Create account",
+      "company_apply": "Apply for trade account",
+      "company_approval_note": "Thank you. We will review your application and activate your trade account within one business day.",
+      "kennitala_error": "The ID number is not valid.",
+      "email_error": "The email address is not valid.",
+      "required_error": "This field is required."
+    },
+    "account": {
+      "title": "My account",
+      "details": "Account details",
+      "orders": "Orders",
+      "order_history": "Order history"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "open": "Open",
+    "loading": "Loading…",
+    "open_cart": "Open cart",
+    "open_search": "Open search",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu"
+  },
+  "newsletter": {
+    "heading": "Get offers and news by email",
+    "placeholder": "Email address",
+    "submit": "Subscribe",
+    "success": "Thank you! You are subscribed."
+  }
+}

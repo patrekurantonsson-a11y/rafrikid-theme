@@ -1,0 +1,44 @@
+{% comment %}templates/customers/account.liquid{% endcomment %}
+<div class="rf-container" style="padding-top:2.5rem;padding-bottom:5rem;">
+  <h1>{{ 'customers.account.title' | t }}, {{ customer.first_name | escape }}</h1>
+  <p><a href="{{ routes.account_logout_url }}">{{ 'customers.logout' | t }}</a></p>
+
+  <div style="display:grid;grid-template-columns:280px 1fr;gap:2rem;align-items:start;margin-top:2rem;">
+    <aside>
+      <nav aria-label="Reikningsvalmynd">
+        <a href="{{ routes.account_url }}" style="display:block;padding:.5rem .75rem;font-weight:600;background:var(--color-base-background-2);border-radius:var(--border-radius);margin-bottom:.25rem;text-decoration:none;color:var(--color-base-text);">{{ 'customers.account.orders' | t }}</a>
+        <a href="{{ routes.account_addresses_url }}" style="display:block;padding:.5rem .75rem;border-radius:var(--border-radius);margin-bottom:.25rem;text-decoration:none;color:var(--color-base-text);">{{ 'customers.addresses.title' | t }}</a>
+      </nav>
+    </aside>
+
+    <div>
+      <h2>{{ 'customers.account.order_history' | t }}</h2>
+      {%- if customer.orders.size == 0 -%}
+        <p class="text-secondary">Engar pantanir enn.</p>
+      {%- else -%}
+        <table class="rf-list-table">
+          <thead>
+            <tr>
+              <th>Pöntun</th>
+              <th>Dagsetning</th>
+              <th>Greiðsla</th>
+              <th>Afhending</th>
+              <th>Samtals</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for order in customer.orders -%}
+              <tr>
+                <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                <td>{{ order.created_at | date: '%d.%m.%Y' }}</td>
+                <td>{{ order.financial_status_label }}</td>
+                <td>{{ order.fulfillment_status_label }}</td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

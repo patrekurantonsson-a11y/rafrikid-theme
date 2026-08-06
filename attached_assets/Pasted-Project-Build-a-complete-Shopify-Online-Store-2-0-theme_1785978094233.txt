@@ -1,0 +1,238 @@
+Project
+
+Build a complete Shopify Online Store 2.0 theme for Rafríkið (rafrikid.is / rafríkið.is), an Icelandic electrical supplies retailer based in Þorlákshöfn. The store sells lighting, wiring accessories, distribution board equipment, cable, industrial automation components, EV charging, solar, and HVAC — sourced from European wholesale distributors.
+
+The store serves two audiences at once:
+
+Fagaðilar (trade — electricians, contractors, facility managers) who buy by MPN/EAN, care about stock, lead times, box quantities and net prices excluding VAT.
+Neytendur (consumers) who buy one light switch, want a picture, a plain-language description, and a price with VAT already in it.
+
+The theme must serve both without feeling like two bolted-together sites. This is the central design problem — solve it with a single VAT display mode toggle and progressive disclosure of technical data, not with separate storefronts.
+
+Fork Shopify's Dawn theme as the base. Do not build Liquid from scratch. Dawn gives working AJAX cart, predictive search, section rendering API, and accessibility scaffolding. Restyle it heavily and add the custom sections described below.
+
+Deliverable
+
+A complete theme directory, zippable and uploadable to Shopify admin, plus runnable via Shopify CLI:
+
+rafrikid-theme/
+├── assets/
+├── config/
+│   ├── settings_schema.json
+│   └── settings_data.json
+├── layout/
+│   └── theme.liquid
+├── locales/
+│   ├── is.default.json
+│   ├── is.default.schema.json
+│   └── en.json
+├── sections/
+├── snippets/
+├── templates/
+└── README.md
+
+is.default.json — Icelandic is the default locale, not a translation layer. English is secondary and optional.
+
+The README must document: how to run shopify theme dev, every metafield the theme expects (with namespace, key and type), every customer tag the theme reads, and which features require a Shopify app or Plus.
+
+Hard constraints — read before writing code
+
+These are real Shopify platform limits. Do not design around features that don't exist.
+
+A theme controls price display, not price calculation. Genuine trade net pricing (customer-specific price lists) requires Shopify Plus B2B or a wholesale app. Build the theme so it reads a trade price from a variant metafield custom.verd_fagadili if present and falls back to the standard price if not. Document this clearly.
+Customer tags are the segmentation mechanism. A logged-in customer tagged fagadili is trade. Everyone else is a consumer. Read tags in Liquid via customer.tags contains 'fagadili'.
+Icelandic VAT is 24% on electrical goods. Shopify stores are configured with tax-inclusive pricing in Iceland, so product.price includes VAT. Excluding-VAT display = price | divided_by: 1.24. Round to whole krónur. Never let the two figures disagree by rounding drift — compute the excl figure from the incl figure, always, in one snippet.
+ISK has no decimal subunit in practice. Format as 12.450 kr. — period as thousands separator, space before kr., no aura. Build one snippets/verd.liquid and use it everywhere; do not scatter money formatting.
+Shopify's native search does not reliably index metafields. If MPN and EAN live in metafields, they will not be findable. Mirror MPN and EAN into product tags on import so predictive search finds them, and note this requirement in the README.
+Do not use <form>-free hacks or client-side price overrides that would let a customer manipulate what they pay. Display only.
+Visual direction
+
+Do not produce a generic e-commerce theme. The identity comes from the trade's own materials.
+
+Signature element: the PE stripe. IEC 60446 protective-earth conductor colouring — green with a yellow stripe — is instantly recognisable to every electrician in Iceland and reads as a confident graphic device to everyone else. Use it as a diagonal-striped 4px rule that marks section boundaries, the active nav item, and the top edge of the header. It appears exactly there and nowhere else. It is the one bold move; everything else stays quiet.
+
+Palette (define as CSS custom properties in assets/base.css):
+
+Token	Hex	Use
+--rf-panel	
+#15191E	Header, footer, dark surfaces — enclosure steel
+--rf-kopar	
+#B0602A	Primary action colour, links on light — copper
+--rf-pe-graen	
+#2F7D3A	PE stripe green
+--rf-pe-gul	
+#D8CE24	PE stripe yellow
+--rf-hvitt	
+#F6F6F4	Page background
+--rf-stal	
+#5D6570	Secondary text, rules, metadata
+--rf-lager	
+#1D7A4C	In-stock indicator
+--rf-bid	
+#B8791A	Incoming / lead-time indicator
+
+Typography — load from Google Fonts, all three support Icelandic þ ð æ ö á í ó ú ý:
+
+Display: Archivo, weight 700–800, tight tracking. Headlines, section titles, price figures.
+Body: Public Sans, 400/600. Descriptions, navigation, everything conversational.
+Data: IBM Plex Mono, 400. MPN, EAN, SKU, box quantities, technical specs. Monospace here is functional — it makes part numbers scannable and visually separates machine data from human copy. This distinction is the theme's core dual-audience device: consumers ignore the mono text, trade buyers read only the mono text.
+
+Layout: dense but not cramped. 1280px max content width. Product grid 2 columns mobile / 4 desktop. Generous vertical rhythm on marketing surfaces, tight tabular rhythm on data surfaces. Border radius 2px throughout — near-square, not pill-shaped.
+
+Motion: minimal. Hover state on product cards raises elevation and reveals the technical data line. Cart drawer slides. Nothing else animates. Respect prefers-reduced-motion.
+
+The VAT toggle — the most important component
+
+A persistent control in the header, visible on every page:
+
+Verð:  [ Með vsk ]  [ Án vsk ]
+
+Behaviour:
+
+Stores choice in localStorage under key rafrikid_vsk.
+Defaults to Með vsk for anonymous visitors and untagged customers.
+Defaults to Án vsk for customers tagged fagadili.
+Switching re-renders every price on the page without a reload.
+The non-active figure is always shown as a small secondary line beneath the primary price, in --rf-stal, so neither audience ever has to do mental arithmetic: 3.980 kr. án vsk / 4.935 kr. með vsk.
+Persists across pages, is read in Liquid on first paint where possible to avoid a flash of the wrong price.
+
+Label the toggle exactly: Með vsk and Án vsk. Header hint text: Sýna verð.
+
+Templates and sections
+templates/index.json — Forsíða
+Hero. Not a lifestyle photo. A search-first hero: oversized search field over the dark --rf-panel surface with the PE stripe along the top edge.
+Headline: Rafmagn, ljós og lagnaefni — allt á einum stað
+Sub: Sendum um allt land. Sækja á staðnum í Þorlákshöfn.
+Search placeholder: Leitaðu að vöru, vörunúmeri eða strikamerki
+Vöruflokkar — 12-tile category grid with line icons, Icelandic labels (list below).
+Tvær leiðir að versla — two panels side by side:
+Fyrir fagaðila → Nettóverð, hraðpöntun með vörunúmerum og reikningsviðskipti. CTA: Stofna fagreikning
+Fyrir heimili → Skýrar lýsingar, verð með vsk og sending heim að dyrum. CTA: Skoða vörur
+Vinsælar vörur — product carousel.
+Afhending — three columns: Sækja á staðnum, Sending um allt land, Fastar ferðir á Selfoss og í Holtagarða.
+Vörumerki — logo strip.
+Fréttabréf — heading Fáðu tilboð og nýjungar í póstinn, button Skrá mig.
+templates/product.json — Vörusíða
+
+Layout: gallery left, buy box right, technical data below the fold.
+
+Buy box order:
+
+Brand (vendor), product title, short description
+Stock badge — Til á lager (green dot) / Væntanlegt (amber dot) / Uppselt (grey)
+Price block with both VAT figures
+If trade metafield present and customer tagged fagadili: badge Fagverð
+Quantity selector that snaps to box quantity when the metafield custom.kassi exists, with helper text: Selt í kössum — {{ kassi }} stk.
+Buttons: Bæta í körfu (primary, copper) and Óska eftir tilboði (secondary, opens a form for quantities above a threshold)
+Lead time line: Afhendingartími: {{ value }}
+
+Technical data table (mono font, two columns, collapsed on mobile behind Tæknilýsing):
+
+Icelandic label	Metafield
+Vörunúmer framleiðanda	custom.mpn
+Strikamerki (EAN)	custom.ean
+Pakkning	custom.pakkning
+Í kassa	custom.kassi
+Á bretti	custom.bretti
+Spenna	custom.spenna
+Straumur	custom.straumur
+IP-flokkur	custom.ip_flokkur
+Litarhitastig	custom.litarhitastig
+Ljósstreymi	custom.ljosstreymi
+Orkuflokkur	custom.orkuflokkur
+
+Render each row only if the metafield has a value. Never print an empty row or a dash.
+
+Below: Lýsing (rich text), Skjöl og leiðbeiningar (PDF file list from a metafield), Svipaðar vörur.
+
+templates/collection.json — Vöruflokkur
+Filter sidebar (desktop) / drawer (mobile): Sía. Facets from Shopify Search & Discovery: Vörumerki, Verð, Framboð, plus metafield facets where configured.
+Sort dropdown labelled Raða eftir with options: Vinsælast, Verð: lágt til hátt, Verð: hátt til lágt, Nýjast, Nafn A–Ö.
+Toggle between Reitir (grid) and Listi (table). List view is the trade view — a dense table with MPN, EAN, stock, box qty, price and an inline quantity + add button per row. Remember the choice in localStorage.
+Product card shows: image, vendor, title, stock dot, both price figures, and MPN in mono on hover.
+Empty state: Engar vörur fundust. Prófaðu að fjarlægja síur eða leita að vörunúmeri.
+templates/page.hradpontun.json — Hraðpöntun (custom page template)
+
+The single strongest trade feature. Build it properly.
+
+Heading: Hraðpöntun
+Intro: Límdu inn vörunúmer eða strikamerki með magni, eitt í hverri línu.
+Large textarea accepting MPN,magn or EAN magn or tab-separated, one per line.
+Also accepts .csv / .xlsx upload — parse CSV client-side; for xlsx use SheetJS from CDN.
+On parse: show a resolution table with columns Kóði, Vara, Magn, Verð, Staða. Resolve codes via the Shopify predictive search JSON API (/search/suggest.json?q={code}&resources[type]=product).
+Unmatched lines get Fannst ekki in --rf-bid and stay editable.
+Button Setja allt í körfu posts to /cart/add.js in one batched call.
+Running total shown in both VAT modes.
+templates/customers/register.json — Nýskráning
+
+Two tabs: Einstaklingur and Fyrirtæki.
+
+Company tab adds: Fyrirtækjanafn, Kennitala, VSK-númer, Heimilisfang, Sími, Tilvísun/kaupandi.
+
+Validate kennitala client-side: 10 digits, standard mod-11 checksum on the first 9 digits with weights 3,2,7,6,5,4,3,2. Error text: Kennitalan er ekki gild. Submit company registrations with a note that the account requires approval — success message: Takk fyrir. Við yfirförum umsóknina og virkjum fagreikninginn innan eins virks dags.
+
+Other templates
+
+Standard Dawn coverage for cart, search, blog, article, 404, password, plus page templates for um-okkur, afhending, skilmalar, personuvernd, skilarettur, hafa-samband.
+
+404 copy: Þessi síða fannst ekki. / Prófaðu leitina eða skoðaðu vöruflokkana.
+
+Navigation — Icelandic category labels
+
+Header mega-menu, twelve top-level groups:
+
+Ljós og perur
+Lampar og ljósabúnaður
+Rofar og tenglar
+Raflagnaefni
+Töflubúnaður og varnir
+Kaplar og vír
+Iðnstýringar og sjálfvirkni
+Hleðslustöðvar og rafbílar
+Sólarorka og rafgeymar
+Loftræsting og hiti
+Verkfæri og mælitæki
+Útsala
+
+Utility bar above: Hraðpöntun, Fagaðilar, Afhending, Hafa samband, phone number, VAT toggle, search, account, cart.
+
+Footer columns: Vöruflokkar, Þjónusta (Afhending, Skilaréttur, Skilmálar, Persónuvernd), Um Rafríkið (Um okkur, Hafa samband, Fagreikningur), and a business line:
+
+Rafríkið ehf. · Þorlákshöfn · kt. 000000-0000 · vsknr. 000000
+
+Icelandic UI string reference
+
+Put all of these in locales/is.default.json. Never hardcode Icelandic in Liquid.
+
+Actions: Bæta í körfu, Í körfu, Kaupa, Ganga frá pöntun, Halda áfram að versla, Skoða körfu, Óska eftir tilboði, Skrá mig, Innskráning, Útskráning, Nýskráning, Stofna fagreikning, Leita, Sía, Hreinsa síur, Sjá meira, Loka
+
+Status: Til á lager, Væntanlegt, Uppselt, Á leiðinni, Aðeins {{ count }} eftir, Fáanlegt eftir pöntun
+
+Cart: Karfan þín, Karfan er tóm, Samtals, Samtals án vsk, Virðisaukaskattur (24%), Sending reiknuð í næsta skrefi, Fjarlægja, Magn, Athugasemd við pöntun
+
+Delivery: Sækja á staðnum í Þorlákshöfn, Sending um allt land, Afhendingartími, Fríar sendingar yfir {{ amount }}
+
+Forms: Netfang, Lykilorð, Nafn, Sími, Heimilisfang, Póstnúmer, Staður, Kennitala, Fyrirtækjanafn, Skilaboð, Þetta reit þarf að fylla út., Netfangið er ekki gilt.
+
+Errors and empty states — direct, no apology, always say what to do next:
+
+Varan er ekki til í þessu magni. Mest {{ count }} stk. í boði.
+Ekki tókst að bæta í körfu. Reyndu aftur eða hafðu samband í síma 000 0000.
+Engar niðurstöður fyrir „{{ terms }}“. Prófaðu vörunúmer eða styttri leit.
+Quality floor
+Fully responsive from 360px. Mobile is the trade user standing in a van.
+Lighthouse: performance ≥ 90 mobile, accessibility ≥ 95.
+Keyboard navigable with visible focus rings in --rf-kopar. Skip link. Correct heading hierarchy. All interactive elements have accessible names in Icelandic.
+lang="is" on <html>. Icelandic characters must render correctly everywhere including in the mono face — test with Þórður æfði ýkt góða sólóið á öllum þökunum.
+Images lazy-loaded with correct sizes, WebP via Shopify's image_url filter.
+No external JS beyond Shopify's own and the optional SheetJS on the hraðpöntun page.
+Product structured data (JSON-LD) with priceCurrency: "ISK".
+Do not build
+
+Flag these in the README as out of scope for the theme, requiring apps or Shopify configuration:
+
+Customer-specific price lists and volume discounts (Plus B2B or wholesale app)
+Invoice / 30-day payment terms (Plus B2B, or manual draft orders)
+ERP or supplier stock feed sync
+Icelandic payment providers (Teya, Rapyd, Netgíró, Pei, Aur) — configured in Shopify Payments settings, not the theme
+Automatic kennitala lookup against fyrirtaekjaskra

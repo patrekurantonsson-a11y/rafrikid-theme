@@ -1,0 +1,319 @@
+{
+  "general": {
+    "currency": {
+      "format": "{{amount}} kr."
+    },
+    "meta": {
+      "tags": "Merkt: {{tags}}",
+      "author": "Höfundur: {{author}}"
+    },
+    "password_page": {
+      "coming_soon": "Rafríkið opnar fljótlega"
+    }
+  },
+  "404": {
+    "title": "Þessi síða fannst ekki.",
+    "subtext": "Prófaðu leitina eða skoðaðu vöruflokkana.",
+    "link": "Halda áfram að versla"
+  },
+  "pagination": {
+    "label": "Blaðsíðuval",
+    "previous": "Fyrri",
+    "next": "Næsta"
+  },
+  "search": {
+    "title": "Leit",
+    "placeholder": "Leitaðu að vöru, vörunúmeri eða strikamerki",
+    "results_with_count": {
+      "one": "{{count}} niðurstaða",
+      "other": "{{count}} niðurstöður"
+    },
+    "no_results": "Engar niðurstöður fyrir „{{terms}}". Prófaðu vörunúmer eða styttri leit.",
+    "no_results_for": "Engar niðurstöður",
+    "search": "Leita"
+  },
+  "hero": {
+    "headline": "Rafmagn, ljós og lagnaefni — allt á einum stað",
+    "subheading": "Sendum um allt land. Sækja á staðnum í Þorlákshöfn.",
+    "search_placeholder": "Leitaðu að vöru, vörunúmeri eða strikamerki"
+  },
+  "vat": {
+    "toggle_label": "Sýna verð",
+    "with_vat": "Með vsk",
+    "without_vat": "Án vsk",
+    "with_vat_short": "m/vsk",
+    "without_vat_short": "á/vsk"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Bæta í körfu",
+      "added_to_cart": "Í körfu",
+      "buy_it_now": "Kaupa",
+      "from": "Frá",
+      "on_sale": "Í útsölu",
+      "sold_out": "Uppselt",
+      "unavailable": "Ekki fáanlegt",
+      "quantity": {
+        "label": "Magn",
+        "input_label": "Magn á {{product}}"
+      },
+      "description": "Lýsing",
+      "more_information": "Frekari upplýsingar",
+      "request_quote": "Óska eftir tilboði",
+      "share": "Deila",
+      "sku": "SKU",
+      "vendor": "Vörumerki",
+      "in_stock": "Til á lager",
+      "low_stock": "Aðeins {{count}} eftir",
+      "incoming": "Væntanlegt",
+      "out_of_stock": "Uppselt",
+      "available_to_order": "Fáanlegt eftir pöntun",
+      "lead_time": "Afhendingartími",
+      "box_qty_hint": "Selt í kössum — {{count}} stk.",
+      "technical_data": "Tæknilýsing",
+      "documents": "Skjöl og leiðbeiningar",
+      "related_products": "Svipaðar vörur",
+      "errors": {
+        "max_qty": "Varan er ekki til í þessu magni. Mest {{count}} stk. í boði.",
+        "add_to_cart": "Ekki tókst að bæta í körfu. Reyndu aftur eða hafðu samband í síma 422 0000."
+      },
+      "fagverd_badge": "Fagverð"
+    },
+    "general": {
+      "vendor": "Vörumerki"
+    }
+  },
+  "collection": {
+    "title": "Vörur",
+    "filter_and_sort": {
+      "filter_button": "Sía",
+      "filters": "Síur",
+      "clear_all": "Hreinsa síur",
+      "title": "Sía og raða",
+      "sort_by_label": "Raða eftir",
+      "sort_by": {
+        "title": "Raða eftir",
+        "manual": "Valið",
+        "best_selling": "Vinsælast",
+        "title_ascending": "Nafn A–Ö",
+        "title_descending": "Nafn Ö–A",
+        "price_ascending": "Verð: lágt til hátt",
+        "price_descending": "Verð: hátt til lágt",
+        "created_ascending": "Elst",
+        "created_descending": "Nýjast"
+      },
+      "apply": "Nota",
+      "no_results": "Engar vörur fundust. Prófaðu að fjarlægja síur eða leita að vörunúmeri.",
+      "grid_view": "Reitir",
+      "list_view": "Listi",
+      "results_count": {
+        "one": "{{count}} vara",
+        "other": "{{count}} vörur"
+      }
+    },
+    "facets": {
+      "brand": "Vörumerki",
+      "price": "Verð",
+      "availability": "Framboð",
+      "in_stock": "Til á lager"
+    }
+  },
+  "cart": {
+    "title": "Karfan þín",
+    "empty": "Karfan er tóm",
+    "continue_shopping": "Halda áfram að versla",
+    "subtotal": "Samtals",
+    "subtotal_excl": "Samtals án vsk",
+    "vat": "Virðisaukaskattur (24%)",
+    "shipping_note": "Sending reiknuð í næsta skrefi",
+    "free_shipping": "Fríar sendingar yfir {{amount}}",
+    "remove": "Fjarlægja",
+    "quantity": "Magn",
+    "order_note": "Athugasemd við pöntun",
+    "order_note_placeholder": "T.d. sérstæðar athugasemdir",
+    "checkout": "Ganga frá pöntun",
+    "view_cart": "Skoða körfu",
+    "update": "Uppfæra körfu",
+    "taxes_and_shipping_at_checkout": "Skattar og sendingarkostnaður reiknaður í greiðslu",
+    "item": {
+      "one": "vara",
+      "other": "vörur"
+    }
+  },
+  "customers": {
+    "login": {
+      "title": "Innskráning",
+      "email": "Netfang",
+      "password": "Lykilorð",
+      "sign_in": "Innskrá",
+      "forgot_password": "Gleymdirðu lykilorðinu?",
+      "no_account": "Ertu ekki með reikning?",
+      "create_account": "Stofna reikning"
+    },
+    "logout": "Útskráning",
+    "register": {
+      "title": "Nýskráning",
+      "tab_individual": "Einstaklingur",
+      "tab_company": "Fyrirtæki",
+      "email": "Netfang",
+      "first_name": "Fornafn",
+      "last_name": "Eftirnafn",
+      "password": "Lykilorð",
+      "company_name": "Fyrirtækjanafn",
+      "kennitala": "Kennitala",
+      "vat_number": "VSK-númer",
+      "address": "Heimilisfang",
+      "phone": "Sími",
+      "reference": "Tilvísun/kaupandi",
+      "create_account": "Stofna reikning",
+      "company_apply": "Sækja um fagreikning",
+      "company_approval_note": "Takk fyrir. Við yfirförum umsóknina og virkjum fagreikninginn innan eins virks dags.",
+      "kennitala_error": "Kennitalan er ekki gild.",
+      "email_error": "Netfangið er ekki gilt.",
+      "required_error": "Þetta reit þarf að fylla út."
+    },
+    "account": {
+      "title": "Reikningur minn",
+      "details": "Upplýsingar um reikning",
+      "orders": "Pantanir",
+      "order_history": "Pöntunarferill"
+    },
+    "addresses": {
+      "title": "Heimilisföng",
+      "default_address": "Sjálfgefið heimilisfang",
+      "add_new": "Bæta við heimilisfangi",
+      "edit": "Breyta",
+      "delete": "Eyða",
+      "delete_confirm": "Ertu viss?"
+    },
+    "order": {
+      "title": "Pöntun {{name}}",
+      "date": "Dagsetning",
+      "payment_status": "Greiðslustaða",
+      "fulfillment_status": "Afhendingarstaða",
+      "billing_address": "Greiðsluheimilisfang",
+      "shipping_address": "Afhendingarheimilisfang",
+      "subtotal": "Millisamtals",
+      "shipping": "Sending",
+      "tax": "Skattur",
+      "total": "Samtals"
+    }
+  },
+  "addresses": {
+    "first_name": "Fornafn",
+    "last_name": "Eftirnafn",
+    "address1": "Heimilisfang",
+    "address2": "Íbúð, hæð, o.fl.",
+    "city": "Staður",
+    "country": "Land",
+    "province": "Fylki",
+    "zip": "Póstnúmer",
+    "phone": "Sími",
+    "save": "Vista",
+    "cancel": "Hætta við"
+  },
+  "contact": {
+    "form": {
+      "name": "Nafn",
+      "email": "Netfang",
+      "phone": "Sími",
+      "message": "Skilaboð",
+      "send": "Senda",
+      "post_success": "Skilaboð móttekin. Við svörum fljótlega."
+    }
+  },
+  "blogs": {
+    "article": {
+      "written_by": "Höfundur: {{author}}",
+      "read_more": "Lesa meira",
+      "back_to_blog": "Til baka"
+    },
+    "comments": {
+      "title": "Athugasemdir",
+      "no_comments": "Engar athugasemdir.",
+      "moderated": "Muna: athugasemdir eru yfirfarnar áður en þær eru birtar.",
+      "success": "Athugasemd móttekin — hún bíður yfirferðar."
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Fara í efni",
+    "close": "Loka",
+    "open": "Opna",
+    "loading": "Hleður…",
+    "open_cart": "Opna körfu",
+    "open_search": "Opna leit",
+    "open_menu": "Opna valmynd",
+    "close_menu": "Loka valmynd"
+  },
+  "sections": {
+    "header": {
+      "menu": "Valmynd"
+    },
+    "footer": {
+      "categories": "Vöruflokkar",
+      "service": "Þjónusta",
+      "about": "Um Rafríkið"
+    },
+    "hradpontun": {
+      "title": "Hraðpöntun",
+      "intro": "Límdu inn vörunúmer eða strikamerki með magni, eitt í hverri línu.",
+      "textarea_placeholder": "T.d.:\n4016779 10\n5413736001023 5\nLED-PAR38 2",
+      "parse": "Finna vörur",
+      "add_all": "Setja allt í körfu",
+      "total": "Samtals",
+      "columns": {
+        "code": "Kóði",
+        "product": "Vara",
+        "qty": "Magn",
+        "price": "Verð",
+        "status": "Staða"
+      },
+      "not_found": "Fannst ekki",
+      "upload_file": "Hlaða upp skrá (.csv eða .xlsx)"
+    },
+    "delivery": {
+      "title": "Afhendingarleiðir",
+      "pickup_title": "Sækja á staðnum",
+      "pickup_desc": "Í Þorlákshöfn. Opið mán–fös 08:00–17:00.",
+      "shipping_title": "Sending um allt land",
+      "shipping_desc": "Við sendum með Pósturinn og einkaflutningum. Afhending 1–3 virka daga.",
+      "routes_title": "Fastar ferðir",
+      "routes_desc": "Reglulegar ferðir á Selfoss og í Holtagarða í Reykjavík."
+    },
+    "audience": {
+      "title": "Tvær leiðir að versla",
+      "trade_title": "Fyrir fagaðila",
+      "trade_desc": "Nettóverð, hraðpöntun með vörunúmerum og reikningsviðskipti.",
+      "trade_cta": "Stofna fagreikning",
+      "consumer_title": "Fyrir heimili",
+      "consumer_desc": "Skýrar lýsingar, verð með vsk og sending heim að dyrum.",
+      "consumer_cta": "Skoða vörur"
+    }
+  },
+  "delivery": {
+    "pickup": "Sækja á staðnum í Þorlákshöfn",
+    "nationwide": "Sending um allt land",
+    "lead_time": "Afhendingartími",
+    "free_above": "Fríar sendingar yfir {{amount}}"
+  },
+  "forms": {
+    "email": "Netfang",
+    "password": "Lykilorð",
+    "name": "Nafn",
+    "phone": "Sími",
+    "address": "Heimilisfang",
+    "zip": "Póstnúmer",
+    "city": "Staður",
+    "kennitala": "Kennitala",
+    "company_name": "Fyrirtækjanafn",
+    "message": "Skilaboð",
+    "required_error": "Þetta reit þarf að fylla út.",
+    "email_error": "Netfangið er ekki gilt."
+  },
+  "newsletter": {
+    "heading": "Fáðu tilboð og nýjungar í póstinn",
+    "placeholder": "Netfang",
+    "submit": "Skrá mig",
+    "success": "Takk! Þú ert skráð/ur."
+  }
+}
