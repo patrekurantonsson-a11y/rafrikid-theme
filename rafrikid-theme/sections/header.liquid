@@ -108,7 +108,7 @@
         <div class="rf-nav__item">
           <a
             href="{{ link.url }}"
-            class="rf-nav__link{% if link.active %} active{% endif %}"
+            class="rf-nav__link{% if link.current %} active{% endif %}"
             {% if link.links.size > 0 %}aria-haspopup="true" aria-expanded="false"{% endif %}
           >
             {{ link.title }}
@@ -174,8 +174,7 @@
     {
       "type": "text",
       "id": "announcement_text",
-      "label": "Tilkynning",
-      "default": ""
+      "label": "Tilkynning"
     }
   ]
 }
