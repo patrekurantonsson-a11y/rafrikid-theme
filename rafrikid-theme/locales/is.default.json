@@ -28,7 +28,7 @@
       "one": "{{count}} niðurstaða",
       "other": "{{count}} niðurstöður"
     },
-    "no_results": "Engar niðurstöður fyrir „{{terms}}". Prófaðu vörunúmer eða styttri leit.",
+    "no_results": "Engar niðurstöður fyrir „{{terms}}“. Prófaðu vörunúmer eða styttri leit.",
     "no_results_for": "Engar niðurstöður",
     "search": "Leita"
   },
