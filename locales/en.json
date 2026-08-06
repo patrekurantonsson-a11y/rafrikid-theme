@@ -116,6 +116,7 @@
     "remove": "Remove",
     "quantity": "Qty",
     "order_note": "Order note",
+    "order_note_placeholder": "E.g. special instructions",
     "checkout": "Checkout",
     "view_cart": "View cart",
     "update": "Update cart",
@@ -175,5 +176,41 @@
     "placeholder": "Email address",
     "submit": "Subscribe",
     "success": "Thank you! You are subscribed."
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read more",
+      "back_to_blog": "Back"
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu"
+    },
+    "footer": {
+      "categories": "Categories",
+      "service": "Service",
+      "about": "About Rafríkið"
+    },
+    "hradpontun": {
+      "title": "Quick order",
+      "intro": "Paste product numbers or barcodes with quantity, one per line.",
+      "textarea_placeholder": "E.g.:\n4016779 10\n5413736001023 5\nLED-PAR38 2",
+      "parse": "Find products",
+      "add_all": "Add all to cart",
+      "columns": {
+        "code": "Code",
+        "product": "Product",
+        "qty": "Qty",
+        "price": "Price",
+        "status": "Status"
+      },
+      "upload_file": "Upload file (.csv or .xlsx)"
+    }
   }
 }
