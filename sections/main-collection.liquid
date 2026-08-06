@@ -101,83 +101,85 @@
 
     {% comment %} Products {% endcomment %}
     <div>
-      {% if collection.products.size == 0 %}
-        <div style="text-align:center;padding:4rem 1rem;">
-          <p>{{ 'collection.filter_and_sort.no_results' | t }}</p>
-          <a href="{{ collection.url }}" class="btn btn--secondary">{{ 'collection.filter_and_sort.clear_all' | t }}</a>
-        </div>
-      {% else %}
-        <p style="font-size:.8125rem;color:var(--rf-stal);margin-bottom:1rem;">
-          {{ 'collection.filter_and_sort.results_count.other' | t: count: collection.products_count }}
-        </p>
+      {%- paginate collection.products by section.settings.products_per_page -%}
+        {% if collection.products.size == 0 %}
+          <div style="text-align:center;padding:4rem 1rem;">
+            <p>{{ 'collection.filter_and_sort.no_results' | t }}</p>
+            <a href="{{ collection.url }}" class="btn btn--secondary">{{ 'collection.filter_and_sort.clear_all' | t }}</a>
+          </div>
+        {% else %}
+          <p style="font-size:.8125rem;color:var(--rf-stal);margin-bottom:1rem;">
+            {{ 'collection.filter_and_sort.results_count.other' | t: count: collection.products_count }}
+          </p>
 
-        {% comment %} Grid view {% endcomment %}
-        <div id="rf-product-grid" class="rf-product-grid">
-          {% for product in collection.products %}
-            {% render 'product-card', product: product, lazy: true %}
-          {% endfor %}
-        </div>
+          {% comment %} Grid view {% endcomment %}
+          <div id="rf-product-grid" class="rf-product-grid">
+            {% for product in collection.products %}
+              {% render 'product-card', product: product, lazy: true %}
+            {% endfor %}
+          </div>
 
-        {% comment %} List/table view {% endcomment %}
-        <div id="rf-product-list" hidden>
-          <table class="rf-list-table" aria-label="{{ collection.title }}">
-            <thead>
-              <tr>
-                <th>Vara</th>
-                <th>{{ 'collection.facets.brand' | t }}</th>
-                <th class="rf-mono">MPN</th>
-                <th class="rf-mono">EAN</th>
-                <th>Staða</th>
-                <th>Magn/kassa</th>
-                <th>Verð</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for product in collection.products %}
-                {% assign v = product.selected_or_first_available_variant %}
+          {% comment %} List/table view {% endcomment %}
+          <div id="rf-product-list" hidden>
+            <table class="rf-list-table" aria-label="{{ collection.title }}">
+              <thead>
                 <tr>
-                  <td>
-                    <a href="{{ product.url }}" style="font-weight:600;font-size:.9rem;">{{ product.title | escape }}</a>
-                  </td>
-                  <td style="font-size:.8125rem;color:var(--rf-stal);">{{ product.vendor }}</td>
-                  <td class="rf-mono" style="font-size:.8125rem;">{{ product.metafields.custom.mpn | default: '—' }}</td>
-                  <td class="rf-mono" style="font-size:.8125rem;">{{ product.metafields.custom.ean | default: '—' }}</td>
-                  <td>{% render 'stock-badge', variant: v %}</td>
-                  <td class="rf-mono" style="font-size:.8125rem;">{{ product.metafields.custom.kassi | default: '1' }}</td>
-                  <td>{% render 'verd', product: product, variant: v %}</td>
-                  <td>
-                    <form action="{{ routes.cart_add_url }}" method="post" style="display:flex;gap:.25rem;align-items:center;">
-                      <input type="hidden" name="id" value="{{ v.id }}">
-                      <input type="number" name="quantity" value="{{ product.metafields.custom.kassi | default: 1 }}" min="1" class="rf-input" style="width:4rem;padding:.3em .5em;" aria-label="{{ 'cart.quantity' | t }}">
-                      <button type="submit" class="btn btn--primary" style="padding:.4em .75em;font-size:.8125rem;">Bæta í körfu</button>
-                    </form>
-                  </td>
+                  <th>Vara</th>
+                  <th>{{ 'collection.facets.brand' | t }}</th>
+                  <th class="rf-mono">MPN</th>
+                  <th class="rf-mono">EAN</th>
+                  <th>Staða</th>
+                  <th>Magn/kassa</th>
+                  <th>Verð</th>
+                  <th></th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {% for product in collection.products %}
+                  {% assign v = product.selected_or_first_available_variant %}
+                  <tr>
+                    <td>
+                      <a href="{{ product.url }}" style="font-weight:600;font-size:.9rem;">{{ product.title | escape }}</a>
+                    </td>
+                    <td style="font-size:.8125rem;color:var(--rf-stal);">{{ product.vendor }}</td>
+                    <td class="rf-mono" style="font-size:.8125rem;">{{ product.metafields.custom.mpn | default: '—' }}</td>
+                    <td class="rf-mono" style="font-size:.8125rem;">{{ product.metafields.custom.ean | default: '—' }}</td>
+                    <td>{% render 'stock-badge', variant: v %}</td>
+                    <td class="rf-mono" style="font-size:.8125rem;">{{ product.metafields.custom.kassi | default: '1' }}</td>
+                    <td>{% render 'verd', product: product, variant: v %}</td>
+                    <td>
+                      <form action="{{ routes.cart_add_url }}" method="post" style="display:flex;gap:.25rem;align-items:center;">
+                        <input type="hidden" name="id" value="{{ v.id }}">
+                        <input type="number" name="quantity" value="{{ product.metafields.custom.kassi | default: 1 }}" min="1" class="rf-input" style="width:4rem;padding:.3em .5em;" aria-label="{{ 'cart.quantity' | t }}">
+                        <button type="submit" class="btn btn--primary" style="padding:.4em .75em;font-size:.8125rem;">Bæta í körfu</button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
 
-        {% comment %} Pagination {% endcomment %}
-        {%- if paginate.pages > 1 -%}
-          <nav class="rf-breadcrumbs" style="margin-top:2rem;justify-content:center;" aria-label="{{ 'pagination.label' | t }}">
-            {%- if paginate.previous -%}
-              <a href="{{ paginate.previous.url }}">{{ 'pagination.previous' | t }}</a>
-            {%- endif -%}
-            {%- for part in paginate.parts -%}
-              {%- if part.is_link -%}
-                <a href="{{ part.url }}">{{ part.title }}</a>
-              {%- else -%}
-                <span aria-current="page" style="font-weight:700;">{{ part.title }}</span>
+          {% comment %} Pagination {% endcomment %}
+          {%- if paginate.pages > 1 -%}
+            <nav class="rf-breadcrumbs" style="margin-top:2rem;justify-content:center;" aria-label="{{ 'pagination.label' | t }}">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}">{{ 'pagination.previous' | t }}</a>
               {%- endif -%}
-            {%- endfor -%}
-            {%- if paginate.next -%}
-              <a href="{{ paginate.next.url }}">{{ 'pagination.next' | t }}</a>
-            {%- endif -%}
-          </nav>
-        {%- endif -%}
-      {% endif %}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}">{{ part.title }}</a>
+                {%- else -%}
+                  <span aria-current="page" style="font-weight:700;">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}">{{ 'pagination.next' | t }}</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {% endif %}
+      {%- endpaginate -%}
     </div>
   </div>
 </div>

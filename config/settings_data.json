@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "current": {
     "color_panel": "#15191E",
@@ -18,31 +9,17 @@
     "logo_width": 160,
     "footer_business_line": "Rafríkið ehf. · Þorlákshöfn",
     "cart_type": "drawer",
+    "content_for_index": [],
     "sections": {
       "header": {
         "type": "header",
         "settings": {
-          "logo_width": 160,
           "logo_text": "Rafríkið",
-          "menu": "valmynd",
           "phone_number": "422 0000",
-          "show_announcement": false,
           "announcement_text": ""
         }
-      },
-      "footer": {
-        "type": "footer",
-        "settings": {
-          "menu_categories": "footer",
-          "menu_service": "",
-          "menu_about": "",
-          "phone": "422 0000",
-          "email": "rafrikid@rafrikid.is",
-          "business_line": "Rafríkið ehf. · Þorlákshöfn"
-        }
       }
-    },
-    "content_for_index": []
+    }
   },
   "presets": {}
 }
