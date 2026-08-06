@@ -1,1 +1,193 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Rafríkið",
+    "theme_version": "1.0.0",
+    "theme_author": "Rafríkið ehf.",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Litapaletta"
+      },
+      {
+        "type": "color",
+        "id": "color_panel",
+        "label": "Panel",
+        "default": "#15191E"
+      },
+      {
+        "type": "color",
+        "id": "color_kopar",
+        "label": "Kopar (primary)",
+        "default": "#B0602A"
+      },
+      {
+        "type": "color",
+        "id": "color_pe_graen",
+        "label": "PE-stripe green",
+        "default": "#2F7D3A"
+      },
+      {
+        "type": "color",
+        "id": "color_pe_gul",
+        "label": "PE-stripe yellow",
+        "default": "#D8CE24"
+      }
+    ]
+  },
+  {
+    "name": "typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Leturgerðir"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_display",
+        "label": "Display font (headlines)",
+        "default": "archivo_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "public_sans_n4"
+      }
+    ]
+  },
+  {
+    "name": "layout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Útlit"
+      },
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1440,
+        "step": 40,
+        "unit": "px",
+        "label": "Max width",
+        "default": 1280
+      },
+      {
+        "type": "range",
+        "id": "spacing_sections",
+        "min": 20,
+        "max": 80,
+        "step": 4,
+        "unit": "px",
+        "label": "Section spacing",
+        "default": 60
+      }
+    ]
+  },
+  {
+    "name": "header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Haus"
+      },
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Logo text",
+        "default": "Rafríkið"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo mynd"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 280,
+        "step": 8,
+        "unit": "px",
+        "label": "Logo breidd",
+        "default": 160
+      },
+      {
+        "type": "text",
+        "id": "phone_number",
+        "label": "Símanúmer",
+        "default": "422 0000"
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Tilkynning efst á síðu",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "footer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fótur"
+      },
+      {
+        "type": "text",
+        "id": "footer_business_line",
+        "label": "Fyrirtækjalína",
+        "default": "Rafríkið ehf. · Þorlákshöfn · kt. 000000-0000 · vsknr. 000000"
+      }
+    ]
+  },
+  {
+    "name": "cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Karfa"
+      },
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Tegund körfu",
+        "options": [
+          { "value": "drawer", "label": "Skúffa" },
+          { "value": "page", "label": "Síða" }
+        ],
+        "default": "drawer"
+      }
+    ]
+  },
+  {
+    "name": "social",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Samfélagsmiðlar"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_linkedin",
+        "label": "LinkedIn"
+      }
+    ]
+  }
+]
